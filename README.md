@@ -1,5 +1,5 @@
 <h1>
-<img src='./dist/voxelify.svg'
+<img src='./public/voxelify.svg'
     style='position: relative; top: 7px; padding: 0px; filter: brightness(5) sepia(1) hue-rotate(180deg) saturate(6)' 
     alt='voxelify-logo' width='32' height='32'/>
 Voxelify
@@ -189,6 +189,12 @@ See the base [Mesh](https://threejs.org/docs/index.html?q=mesh#api/en/objects/Me
 - **Chunk structure**: not used for reducing memory waste, unlike existing research.
 - **3D indexing approach**: not used for reducing performance degradation due to expensive multiplication, unlike existing research.
 - **Rendering performance**: 6,000,000 voxels are rendered at 60 FPS on the PC: Intel(R) Core i7-6700 (16GB), NVIDIA GeForce GTX 1080.
+<div style='text-align: center'>
+    <a href='https://youtu.be/X9dkxjxfKK4?si=XWhnkIxlkJYFpnq-'>
+        <img src='./public/images/voxelMesh_introduction.jpg' style='height: 200px'>
+    </a>
+    <img src='./public/images/voxelMesh_example.jpg' style='height: 200px'>
+</div>
 
 ## Voxel Modeling & Processing
 
@@ -214,6 +220,14 @@ See the base [Mesh](https://threejs.org/docs/index.html?q=mesh#api/en/objects/Me
 - **Filling**: we support the function of filling gaps such as holes on the boundary surface. Voxels lost in the middle of the surface can be restored.
 - **Editing**: voxels are first selected through mouse event and ray intersection, then we perform the voxel addition and deletion using the neighbor information of selected voxels. All work is carried out in an interactive manner. Click the [link](https://youtu.be/R2ihW7gPpIw?si=WWpkmm8UTKhb0Mbp) to watch the YouTube demo.
 - **VOX format**: this format is supported, widely used in the voxel ecosystem.
+<div style='text-align: center'>
+    <img src='./public/images/boxVoxels.png' style='height: 200px'>
+    <img src='./public/images/cylinderVoxels.png' style='height: 200px'>
+    <img src='./public/images/sphereVoxels.png' style='height: 200px'>
+    <img src='./public/images/tetrahedronVoxels.png' style='height: 200px'>
+    <img src='./public/images/octahedronVoxels.png' style='height: 200px'>
+    <img src='./public/images/legoVoxels.png' style='height: 200px'>
+</div>
 
 ## PBR-based Voxel Rendering
 
@@ -222,6 +236,10 @@ See the base [Mesh](https://threejs.org/docs/index.html?q=mesh#api/en/objects/Me
 - **Frustum culling**: voxels not rendered, which exist outside the viewing space.
 - **Occlusion culling**: voxels not rendered, which are hidden by other objects so are not visible to the camera.
 - **Ambient occlusion**: our shader program calculates how exposed each point in a scene is to ambient lighting by counting the presence of neighboring voxels.
+<div style='text-align: center'>
+    <img src='./public/images/ambientOcclusion.png' style='height: 200px'>
+    <img src='./public/images/ambientOcclusion2.png' style='height: 200px'>
+</div>
 
 ## Voxel Dynamics & Simulation
 
@@ -234,6 +252,15 @@ See the base [Mesh](https://threejs.org/docs/index.html?q=mesh#api/en/objects/Me
 
 > NOTE: Some of the features require [gpu.js](https://gpu.rocks/#/), which can be downloaded from [npm](https://www.npmjs.com/).
 
+<div style='text-align: center'>
+    <a href='https://youtu.be/pKaeW6yIXPo?si=z4BrcyO1gqQ6-eCq'><img src='./public/images/alienMonster_01.jpg' style='height: 200px'></a>
+    <a href='https://youtu.be/0g30rf1Z6oQ?si=Q5fwM8BwErYLNfJ-'><img src='./public/images/alienMonster_02.jpg' style='height: 200px'></a>
+    <a href='https://youtu.be/JAc7Sj1OHK0?si=Y_TEPWzsZkg6sqCv'><img src='./public/images/alienMonster_03.jpg' style='height: 200px'></a>
+    <a href='https://youtu.be/oX7mKh5quL8?si=hOzwuklynH34GdZx'><img src='./public/images/voxelTween.jpg' style='height: 200px'></a>
+    <a href='https://youtu.be/PWY0log0jAs?si=-28ExLPIA0ZSUU0I'><img src='./public/images/voxelAutomata_01.jpg' style='height: 200px'></a>
+    <a href='https://youtu.be/GVCD3PyIWWE?si=lNuKkuoXU-Ed_nkO'><img src='./public/images/voxelAutomata_02.jpg' style='height: 200px'></a>
+</div>
+
 ## Application Examples
 
 - **3D fractals**: We create 3D fractals that are a range of chaotic equation-based objects, most often derived from the Mandelbrot set. Typical examples include Mandelbulb, Menger sponge, Juliabulb, Sierpinski tetrahedron, etc. These 3D models are quickly created and rendered in 3D space using the GPU.
@@ -243,6 +270,17 @@ See the base [Mesh](https://threejs.org/docs/index.html?q=mesh#api/en/objects/Me
 - **3D tween**: We create a voxel model at one specific frame in the timeline. And, change that voxels at another specific frame. Animate then interpolates the intermediate models for the frames in between, creating the animation of one voxels morphing into another.
 
 > NOTE: Some of the features require [gpu.js](https://gpu.rocks/#/), which can be downloaded from [npm](https://www.npmjs.com/).
+
+<div style='text-align: center'>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353167566530674689'><img src='./public/images/Mandelbulb.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353168666042302465'><img src='./public/images/MengerSponge.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353170865065558017'><img src='./public/images/PillarCave.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353176362623696897'><img src='./public/images/SierpinskiTetrahedron.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353148874833002497'><img src='./public/images/Apollonian.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353151073856258049'><img src='./public/images/EllyTetra.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353164267995791361'><img src='./public/images/IFS3dCross.gif' style='height: 200px'></a>
+    <a href='https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/90178724377835402463078005350460336323666865499173906711088353153272879513601'><img src='./public/images/Juliabulb.gif' style='height: 200px'></a>
+</div>
 
 ## Contact Us
 Please contact us at info@nova-graphix.com for any questions or suggestions.
