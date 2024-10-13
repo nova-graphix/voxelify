@@ -1,11 +1,3 @@
-<!-- set the style of table rows to be striped -->
-<style>
-tr:nth-child(even) {
-  background-color: #272727!important;
-  color: #dddddd!important;
-}
-</style>
-
 <h1>
 <img src='./dist/voxelify.svg'
     style='position: relative; top: 7px; padding: 0px; filter: brightness(5) sepia(1) hue-rotate(180deg) saturate(6)' 
