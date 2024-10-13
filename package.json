@@ -1,0 +1,45 @@
+{
+  "name": "voxelify",
+  "version": "1.0.0",
+  "description": "A lightweight JavaScript library for rapid 3D voxel modeling and rendering",
+  "type": "module",
+  "files": [
+    "dist",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "main": "./dist/voxelify.js",
+  "module": "./dist/voxelify.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nova-graphix/voxelify.git"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "3d",
+    "voxel",
+    "voxel mesh",
+    "voxelization",
+    "three.js",
+    "webgl"
+  ],
+  "author": "nova-graphix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nova-graphix/voxelify/issues"
+  },
+  "homepage": "https://github.com/nova-graphix/voxelify",
+  "devDependencies": {
+    "three": "^0.169.0",
+    "vite": "^5.4.1"
+  },
+  "peerDependencies": {
+    "three": ">=0.167"
+  }
+}
