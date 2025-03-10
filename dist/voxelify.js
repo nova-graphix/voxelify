@@ -1,8 +1,8 @@
 var g0 = Object.defineProperty;
 var y0 = (f, t, e) => t in f ? g0(f, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : f[t] = e;
 var j = (f, t, e) => y0(f, typeof t != "symbol" ? t + "" : t, e);
-import { Matrix4 as m0, Vector3 as F, Vector4 as V0, Mesh as c0, TextureLoader as l0, InstancedBufferGeometry as O0, BufferAttribute as h0, InstancedBufferAttribute as Q, MeshStandardMaterial as M0, Vector2 as p0, BoxGeometry as S0, MeshBasicMaterial as E0, Group as L0, Box3Helper as R0, Box3 as f0, ArrowHelper as w0, Sphere as C0, MathUtils as B } from "three";
-import { SimplexNoise as b0 } from "three/examples/jsm/math/SimplexNoise";
+import { Mesh as c0, TextureLoader as l0, Vector3 as F, InstancedBufferGeometry as m0, BufferAttribute as h0, InstancedBufferAttribute as Q, MeshStandardMaterial as V0, Vector2 as p0, Matrix4 as O0, BoxGeometry as M0, MeshBasicMaterial as S0, Group as E0, Box3Helper as L0, Box3 as f0, ArrowHelper as R0, Vector4 as w0, Sphere as C0, MathUtils as B } from "three";
+import { SimplexNoise as b0 } from "three/examples/jsm/math/SimplexNoise.js";
 const z0 = (f, t = 0, e = 1) => Math.max(t, Math.min(e, f));
 function T0() {
   this.xsize = 0, this.ysize = 0, this.zsize = 0, this.vcount = 0, this.voxels = {}, this.palette = null, this.setVoxel = function(f, t, e, o) {
@@ -133,7 +133,7 @@ class D0 {
     return Math.sqrt(((512 + o) * s * s >> 8) + 4 * n * n + ((767 - o) * r * r >> 8));
   }
 }
-const N0 = (f) => f < 0.04045 ? f * 0.0773993808 : Math.pow(f * 0.9478672986 + 0.0521327014, 2.4), t0 = (f, t = 0, e = 1) => Math.max(t, Math.min(e, f)), x0 = new m0(), I = new F(), $ = new F(), H = new F(), I0 = new V0(), X = new F();
+const N0 = (f) => f < 0.04045 ? f * 0.0773993808 : Math.pow(f * 0.9478672986 + 0.0521327014, 2.4), t0 = (f, t = 0, e = 1) => Math.max(t, Math.min(e, f)), x0 = new O0(), I = new F(), $ = new F(), H = new F(), I0 = new w0(), X = new F();
 let Y = null, P = null, G = null;
 const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   1,
@@ -477,7 +477,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   __createVoxMeshGeometry(t = null) {
     t || (t = this.voxMap);
-    const e = t.size, o = new O0();
+    const e = t.size, o = new m0();
     o.instanceCount = e;
     let s, n;
     this.voxType === "cube" ? (n = [
@@ -542,7 +542,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     var a;
     const e = this.voxType.toUpperCase() + "_VOXEL", o = (a = this.atlas) != null && a.uvScale ? this.atlas.uvScale : [1, 1 / 3], s = this.voxDim;
     s >= 3 && (t = { ...t, transparent: !0 });
-    const n = new M0(t), r = {
+    const n = new V0(t), r = {
       uvScale: { value: new p0(o[0], o[1]) }
     };
     return n.onBeforeCompile = (i) => {
@@ -842,7 +842,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   __drawVoxel(t) {
     if (Y === null) {
-      const o = new S0(1.02, 1.02, 1.02), s = new E0({ color: 16711680, opacity: 0.5, transparent: !0 });
+      const o = new M0(1.02, 1.02, 1.02), s = new S0({ color: 16711680, opacity: 0.5, transparent: !0 });
       Y = new c0(o, s), this.threefy.scene.add(Y);
     }
     const e = this.__getVoxelCenter(t);
@@ -850,9 +850,9 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   __drawVoxelBoxes(t) {
     if (G === null) {
-      G = new L0();
+      G = new E0();
       for (let e = 0; e < 12; e++)
-        G.add(new R0(new f0(), 16711680));
+        G.add(new L0(new f0(), 16711680));
       this.threefy.scene.add(G);
     }
     for (let e = 0; e < 12; e++)
@@ -868,7 +868,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     });
   }
   __drawArrowHelper(t, e) {
-    P === null && (P = new w0(), P.setLength(1), P.setColor(16711680), this.threefy.scene.add(P)), P.position.copy(t), P.setDirection(e);
+    P === null && (P = new R0(), P.setLength(1), P.setColor(16711680), this.threefy.scene.add(P)), P.position.copy(t), P.setDirection(e);
   }
   __updateDrawNeighbors() {
     const t = this.threefy, e = t.camera, o = t.raycaster, s = t.mouseMovePosition, n = [];

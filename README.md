@@ -5,9 +5,9 @@
 Voxelify
 </h1>
 
-![](https://img.shields.io/badge/npm-v1.0.0-yellow)
-![](https://img.shields.io/badge/minzipped_size-24.5KB-blue)
-![](https://img.shields.io/badge/three.js-r169-green)
+![](https://img.shields.io/badge/npm-v1.0.2-yellow)
+![](https://img.shields.io/badge/package_size-29.3KB-blue)
+![](https://img.shields.io/badge/three.js-r174-green)
 ![](https://img.shields.io/badge/license-mit-red)
 
 ## Overview
@@ -249,8 +249,6 @@ See the base [Mesh](https://threejs.org/docs/index.html?q=mesh#api/en/objects/Me
 - **Particle dynamics**: VoxelMesh includes a dual structure. One is that it supports a grid network like a general voxel engine, and the other is that it can implement particle dynamics which is hardly possible in existing voxel engines. For example, water simulation can be implemented using the PIC or FLIP algorithm.
 - **Animation properties**: VoxelMesh has 4 properties for voxel animation. These include size, opacity, life, and rotation. Their total size is 2 bytes.
 - **Celluar automata**: VoxelMesh can simulate several types of celluar automata (CA) studied in various areas, including physics, theoretical biology and microstructure modeling.
-
-> NOTE: Some of the features require [gpu.js](https://gpu.rocks/#/), which can be downloaded from [npm](https://www.npmjs.com/).
 
 <div style='text-align: center'>
     <a href='https://youtu.be/pKaeW6yIXPo?si=z4BrcyO1gqQ6-eCq'><img src='./public/images/alienMonster_01.jpg' style='height: 200px'></a>
