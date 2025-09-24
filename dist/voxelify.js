@@ -1,27 +1,24 @@
-var g0 = Object.defineProperty;
-var y0 = (f, t, e) => t in f ? g0(f, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : f[t] = e;
-var j = (f, t, e) => y0(f, typeof t != "symbol" ? t + "" : t, e);
-import { Mesh as c0, TextureLoader as l0, Vector3 as F, InstancedBufferGeometry as m0, BufferAttribute as h0, InstancedBufferAttribute as Q, MeshStandardMaterial as V0, Vector2 as p0, Matrix4 as O0, BoxGeometry as M0, MeshBasicMaterial as S0, Group as E0, Box3Helper as L0, Box3 as f0, ArrowHelper as R0, Vector4 as w0, Sphere as C0, MathUtils as B } from "three";
-import { SimplexNoise as b0 } from "three/examples/jsm/math/SimplexNoise.js";
-const z0 = (f, t = 0, e = 1) => Math.max(t, Math.min(e, f));
-function T0() {
-  this.xsize = 0, this.ysize = 0, this.zsize = 0, this.vcount = 0, this.voxels = {}, this.palette = null, this.setVoxel = function(f, t, e, o) {
-    o |= 0, f |= 0, t |= 0, e |= 0, this.xsize = 256, this.ysize = 256, this.zsize = 256;
-    var s = f + "_" + t + "_" + e;
+import { Mesh as a0, TextureLoader as r0, Vector3 as F, InstancedBufferGeometry as v0, BufferAttribute as c0, InstancedBufferAttribute as J, MeshStandardMaterial as _0, Vector2 as x0, Matrix4 as g0, BoxGeometry as y0, MeshBasicMaterial as m0, Group as V0, Box3Helper as O0, Box3 as l0, ArrowHelper as M0, Vector4 as S0, Sphere as E0, MathUtils as B } from "three";
+import { SimplexNoise as L0 } from "three/examples/jsm/math/SimplexNoise.js";
+const R0 = (v, t = 0, e = 1) => Math.max(t, Math.min(e, v));
+function w0() {
+  this.xsize = 0, this.ysize = 0, this.zsize = 0, this.vcount = 0, this.voxels = {}, this.palette = null, this.setVoxel = function(v, t, e, o) {
+    o |= 0, v |= 0, t |= 0, e |= 0, this.xsize = 256, this.ysize = 256, this.zsize = 256;
+    var s = v + "_" + t + "_" + e;
     o > 0 ? (this.voxels[s] || this.vcount++, this.voxels[s] = o) : this.voxels[s] && (this.vcount--, delete this.voxels[s]);
-  }, this.setPalette = function(f) {
-    this.palette = f;
-  }, this.appendString = function(f, t) {
+  }, this.setPalette = function(v) {
+    this.palette = v;
+  }, this.appendString = function(v, t) {
     for (var e = 0, o = t.length; e < o; e++)
-      f.push(t.charCodeAt(e));
-  }, this.appendUInt32 = function(f, t) {
-    f.push(t & 255, t >>> 8 & 255, t >>> 16 & 255, t >>> 24 & 255);
-  }, this.appendRGBA = function(f, t) {
-    f.push(t >>> 16 & 255, t >>> 8 & 255, t & 255, t >>> 24 & 255);
-  }, this.appendVoxel = function(f, t) {
+      v.push(t.charCodeAt(e));
+  }, this.appendUInt32 = function(v, t) {
+    v.push(t & 255, t >>> 8 & 255, t >>> 16 & 255, t >>> 24 & 255);
+  }, this.appendRGBA = function(v, t) {
+    v.push(t >>> 16 & 255, t >>> 8 & 255, t & 255, t >>> 24 & 255);
+  }, this.appendVoxel = function(v, t) {
     const e = t.split("_");
-    f.push(e[0], e[1], e[2], this.voxels[t]);
-  }, this.export = function(f) {
+    v.push(e[0], e[1], e[2], this.voxels[t]);
+  }, this.export = function(v) {
     var t = [];
     this.appendString(t, "VOX "), this.appendUInt32(t, 150), this.appendString(t, "MAIN"), this.appendUInt32(t, 0), this.appendUInt32(t, this.vcount * 4 + 1076), this.appendString(t, "SIZE"), this.appendUInt32(t, 12), this.appendUInt32(t, 0), this.appendUInt32(t, this.xsize), this.appendUInt32(t, this.ysize), this.appendUInt32(t, this.zsize), this.appendString(t, "XYZI"), this.appendUInt32(t, 4 + this.vcount * 4), this.appendUInt32(t, 0), this.appendUInt32(t, this.vcount);
     for (let e in this.voxels)
@@ -31,79 +28,79 @@ function T0() {
       for (let e = 0; e < 256; e++)
         this.appendRGBA(t, this.palette[e]);
     }
-    this.saveByteArray([new Uint8Array(t)], f);
-  }, this.saveByteArray = function() {
-    var f = document.createElement("a");
-    return document.body.appendChild(f), f.style = "display: none", function(t, e) {
+    this.saveByteArray([new Uint8Array(t)], v);
+  }, this.saveByteArray = (function() {
+    var v = document.createElement("a");
+    return document.body.appendChild(v), v.style = "display: none", function(t, e) {
       var o = new Blob(t, { type: "octet/stream" }), s = window.URL.createObjectURL(o);
-      f.href = s, f.download = e, f.click(), window.URL.revokeObjectURL(s);
+      v.href = s, v.download = e, v.click(), window.URL.revokeObjectURL(s);
     };
-  }();
+  })();
 }
-function A0(f, t = 8) {
+function C0(v, t = 8) {
   const e = Math.pow(2, t), o = {};
-  f.forEach((i) => {
-    const c = i[0] + "_" + i[1] + "_" + i[2];
-    o[c] || (o[c] = 1);
+  v.forEach((c) => {
+    const a = c[0] + "_" + c[1] + "_" + c[2];
+    o[a] || (o[a] = 1);
   });
   const s = [];
-  if (Object.keys(o).forEach((i) => {
-    i = i.split("_").map((c) => parseInt(c)), s.push(i);
+  if (Object.keys(o).forEach((c) => {
+    c = c.split("_").map((a) => parseInt(a)), s.push(c);
   }), s.length <= e) {
-    const i = e - s.length;
-    for (let c = 0; c < i; c++) s.push([0, 0, 0]);
+    const c = e - s.length;
+    for (let a = 0; a < c; a++) s.push([0, 0, 0]);
     return s;
   }
-  const n = (i) => {
-    let c = [];
-    for (let h = 0; h < 3; h++) {
-      const l = i.map((u) => u[h]);
-      c.push(l.max() - l.min());
+  const i = (c) => {
+    let a = [];
+    for (let f = 0; f < 3; f++) {
+      const l = c.map((x) => x[f]);
+      a.push(l.max() - l.min());
     }
-    return c.indexOf(Math.min(...c));
-  }, r = (i, c) => {
-    if (i.length === 0)
+    return a.indexOf(Math.min(...a));
+  }, n = (c, a) => {
+    if (c.length === 0)
       return [[0, 0, 0]];
-    if (c === t) {
-      const u = i.reduce((p, d) => (p[0] += d[0], p[1] += d[1], p[2] += d[2], p), [0, 0, 0]);
-      return u[0] = Math.round(u[0] / i.length), u[1] = Math.round(u[1] / i.length), u[2] = Math.round(u[2] / i.length), [u];
+    if (a === t) {
+      const x = c.reduce((u, p) => (u[0] += p[0], u[1] += p[1], u[2] += p[2], u), [0, 0, 0]);
+      return x[0] = Math.round(x[0] / c.length), x[1] = Math.round(x[1] / c.length), x[2] = Math.round(x[2] / c.length), [x];
     }
-    const h = n(i);
-    i.sort((u, p) => u[h] - p[h]);
-    const l = Math.floor(i.length / 2);
+    const f = i(c);
+    c.sort((x, u) => x[f] - u[f]);
+    const l = Math.floor(c.length / 2);
     return [
-      ...r(i.slice(0, l), c + 1),
-      ...r(i.slice(l + 1), c + 1)
+      ...n(c.slice(0, l), a + 1),
+      ...n(c.slice(l + 1), a + 1)
     ];
   };
-  return r(s, 0);
+  return n(s, 0);
 }
-class D0 {
+class b0 {
   createPalette(t) {
     const e = t.geometry.attributes.aVoxData.array;
     let o = [];
-    for (let n = 0, r = e.length; n < r; n += 4) {
-      const a = e[n + 1], i = a >> 16 & 255, c = a >> 8 & 255, h = a & 255;
-      o.push([i, c, h]);
+    for (let i = 0, n = e.length; i < n; i += 4) {
+      const r = e[i + 1], c = r >> 16 & 255, a = r >> 8 & 255, f = r & 255;
+      o.push([c, a, f]);
     }
-    return A0(o, 8);
+    return C0(o, 8);
   }
   saveVoxelMesh(t, e) {
-    var o = new T0();
+    var o = new w0();
     let s = this.createPalette(t);
     s = [[0, 0, 0], ...s], s.pop();
-    const n = t.geometry.attributes.aVoxData.array, r = t.voxDim;
-    for (let i = 0, c = n.length; i < c; i += r) {
-      const h = n[i], l = h >> 16 & 255, u = h >> 8 & 255, p = h & 255, d = n[i + 1], R = d >> 16 & 255, y = d >> 8 & 255, M = d & 255, x = s.map((V) => this.colorDistance(V, [R, y, M]));
-      let v = x.indexOf(Math.min(...x));
-      v === 255 && (x.pop(), v = x.indexOf(Math.min(...x))), o.setVoxel(p, 255 - l, u, v + 1);
+    const i = t.geometry.attributes.aVoxData.array, n = t.voxDim;
+    for (let c = 0, a = i.length; c < a; c += n) {
+      const f = i[c], l = f >> 16 & 255, x = f >> 8 & 255, u = f & 255, p = i[c + 1], S = p >> 16 & 255, _ = p >> 8 & 255, M = p & 255, h = s.map((y) => this.colorDistance(y, [S, _, M]));
+      let d = h.indexOf(Math.min(...h));
+      d === 255 && (h.pop(), d = h.indexOf(Math.min(...h))), o.setVoxel(u, 255 - l, x, d + 1);
     }
-    const a = [];
-    for (let i = 0; i < 256; i++) {
-      const [c, h, l] = this.linearToSRGB(s[i]), u = c << 16 ^ h << 8 ^ l;
-      a.push(u);
+    const r = [];
+    for (let c = 0; c < 256; c++) {
+      const [a, f, l] = this.linearToSRGB(s[c]), x = a << 16 ^ f << 8 ^ l;
+      r.push(x);
     }
-    o.setPalette(a), o.export(e);
+    o.setPalette(r), o.export(e);
   }
   save(t, e) {
     const o = [];
@@ -116,26 +113,26 @@ class D0 {
       this.saveVoxelMesh(o[0], e);
     else {
       const s = e.split(".")[0];
-      o.forEach((n, r) => {
-        this.saveVoxelMesh(n, s + "_" + (r + 1) + ".vox");
+      o.forEach((i, n) => {
+        this.saveVoxelMesh(i, s + "_" + (n + 1) + ".vox");
       });
     }
   }
   linearToSRGB(t) {
     for (let e = 0; e < 3; e++) {
       const o = LinearToSRGB(t[e] / 255);
-      t[e] = z0(~~(o * 255), 0, 255);
+      t[e] = R0(~~(o * 255), 0, 255);
     }
     return t;
   }
   colorDistance(t, e) {
-    const o = (t[0] + e[0]) / 2, s = t[0] - e[0], n = t[1] - e[1], r = t[2] - e[2];
-    return Math.sqrt(((512 + o) * s * s >> 8) + 4 * n * n + ((767 - o) * r * r >> 8));
+    const o = (t[0] + e[0]) / 2, s = t[0] - e[0], i = t[1] - e[1], n = t[2] - e[2];
+    return Math.sqrt(((512 + o) * s * s >> 8) + 4 * i * i + ((767 - o) * n * n >> 8));
   }
 }
-const N0 = (f) => f < 0.04045 ? f * 0.0773993808 : Math.pow(f * 0.9478672986 + 0.0521327014, 2.4), t0 = (f, t = 0, e = 1) => Math.max(t, Math.min(e, f)), x0 = new O0(), I = new F(), $ = new F(), H = new F(), I0 = new w0(), X = new F();
-let Y = null, P = null, G = null;
-const e0 = 65536, o0 = 256, s0 = 1, n0 = [
+const z0 = (v) => v < 0.04045 ? v * 0.0773993808 : Math.pow(v * 0.9478672986 + 0.0521327014, 2.4), Q = (v, t = 0, e = 1) => Math.max(t, Math.min(e, v)), h0 = new g0(), I = new F(), j = new F(), H = new F(), T0 = new S0(), X = new F();
+let $ = null, P = null, G = null;
+const t0 = 65536, e0 = 256, o0 = 1, s0 = [
   1,
   2,
   4,
@@ -168,7 +165,14 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   536870912,
   1073741824,
   2147483648
-], C = class C extends c0 {
+];
+class b extends a0 {
+  // offsets of voxels connected to 6 faces
+  static Faces = ["nzz", "pzz", "znz", "zpz", "zzn", "zzp"];
+  // offsets of voxels connected to 12 edges
+  static Edges = ["znn", "zpn", "znp", "zpp", "nzn", "nzp", "pzn", "pzp", "nnz", "pnz", "npz", "ppz"];
+  // offsets of voxels connected to 8 vertices
+  static Vertices = ["nnn", "pnn", "npn", "ppn", "nnp", "pnp", "npp", "ppp"];
   // where
   // 'pnz' ===> (+X -Y  0)
   // 'npp' ===> (-X +Y +Z)
@@ -186,7 +190,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
       t.tileSize.x / t.texSize.x,
       t.tileSize.y / t.texSize.y
     ] : t.uvScale = [1, 1 / 3]);
-    const e = new l0();
+    const e = new r0();
     t.diffuseMap || (t.diffuseMap = t.diffuseURL ? e.load(t.diffuseURL) : null), t.normalMap || (t.normalMap = t.normalURL ? e.load(t.normalURL) : null);
   }
   // voxMap
@@ -199,7 +203,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     }
   }
   xyz_to_vp(t, e, o, s = 0) {
-    return t = Math.round(t), e = Math.round(e), o = Math.round(o), this.options.voxMapType === "stringVoxMap" ? `${t},${e},${o}` : ((t < 0 || t > 255 || e < 0 || e > 255 || o < 0 || o > 255) && (t = t0(t, 0, 255), e = t0(e, 0, 255), o = t0(o, 0, 255)), s << 24 ^ o << 16 ^ e << 8 ^ t << 0);
+    return t = Math.round(t), e = Math.round(e), o = Math.round(o), this.options.voxMapType === "stringVoxMap" ? `${t},${e},${o}` : ((t < 0 || t > 255 || e < 0 || e > 255 || o < 0 || o > 255) && (t = Q(t, 0, 255), e = Q(e, 0, 255), o = Q(o, 0, 255)), s << 24 ^ o << 16 ^ e << 8 ^ t << 0);
   }
   // static functions
   // basic: (x,y,z) = 0 ~ 255
@@ -251,22 +255,22 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   // vs: (size, opacity, life) = 0 ~ 255
   static get_size(t) {
-    return C._get_x(t);
+    return b._get_x(t);
   }
   static get_opacity(t) {
-    return C._get_y(t);
+    return b._get_y(t);
   }
   static get_life(t) {
-    return C._get_z(t);
+    return b._get_z(t);
   }
   static set_size(t, e) {
-    return C._set_x(t, e);
+    return b._set_x(t, e);
   }
   static set_opacity(t, e) {
-    return C._set_y(t, e);
+    return b._set_y(t, e);
   }
   static set_life(t, e) {
-    return C._set_z(t, e);
+    return b._set_z(t, e);
   }
   // vox default
   static voxDefault(t = 2) {
@@ -275,22 +279,22 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   // vox size
   static getVoxSize(t) {
-    return C._get_x(t.vs);
+    return b._get_x(t.vs);
   }
   static getVoxOpacity(t) {
-    return C._get_y(t.vs);
+    return b._get_y(t.vs);
   }
   static getVoxLife(t) {
-    return C._get_z(t.vs);
+    return b._get_z(t.vs);
   }
   static setVoxSize(t, e) {
-    t.vs = C._set_x(t.vs, e);
+    t.vs = b._set_x(t.vs, e);
   }
   static setVoxOpacity(t, e) {
-    t.vs = C._set_y(t.vs, e);
+    t.vs = b._set_y(t.vs, e);
   }
   static setVoxLife(t, e) {
-    t.vs = C._set_z(t.vs, e);
+    t.vs = b._set_z(t.vs, e);
   }
   //
   initVoxMap() {
@@ -300,28 +304,27 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     this.voxMap && (this.voxMap.clear(), this.voxMap = null);
   }
   regenVoxMap() {
-    var e;
     this.clearVoxMap();
-    const t = (e = this.geometry.attributes.aVoxData) == null ? void 0 : e.array;
+    const t = this.geometry.attributes.aVoxData?.array;
     if (t) {
-      const o = this.voxDim, s = /* @__PURE__ */ new Map();
-      for (let n = 0, r = t.length; n < r; n += o) {
-        let a = { vi: n, vc: t[n + 1] };
-        o >= 3 && (a = { ...a, vs: t[n + 2] }), o >= 4 && (a = { ...a, vr: t[n + 3] }), s.set(t[n], a);
+      const e = this.voxDim, o = /* @__PURE__ */ new Map();
+      for (let s = 0, i = t.length; s < i; s += e) {
+        let n = { vi: s, vc: t[s + 1] };
+        e >= 3 && (n = { ...n, vs: t[s + 2] }), e >= 4 && (n = { ...n, vr: t[s + 3] }), o.set(t[s], n);
       }
-      this.voxMap = s;
+      this.voxMap = o;
     }
   }
   // voxel
   setVoxel(t, e, o, s) {
     if (!this.getVoxel(t, e, o)) {
-      const n = this._origin;
-      n[0] = Math.min(n[0], t), n[1] = Math.min(n[1], e), n[2] = Math.min(n[2], o);
-      const r = this.xyz_to_vp(t, e, o);
-      if (r) {
-        let a, i, c;
-        const h = s.length;
-        h >= 1 && (a = s[0]), h >= 2 && (a = s[1] << 24 ^ s[0] << 0), h >= 5 && (i = s[4] << 16 ^ s[3] << 8 ^ s[2] << 0), h >= 8 && (c = s[7] << 16 ^ s[6] << 8 ^ s[5] << 0), this.voxMap.set(r, { vc: a, vs: i, vr: c });
+      const i = this._origin;
+      i[0] = Math.min(i[0], t), i[1] = Math.min(i[1], e), i[2] = Math.min(i[2], o);
+      const n = this.xyz_to_vp(t, e, o);
+      if (n) {
+        let r, c, a;
+        const f = s.length;
+        f >= 1 && (r = s[0]), f >= 2 && (r = s[1] << 24 ^ s[0] << 0), f >= 5 && (c = s[4] << 16 ^ s[3] << 8 ^ s[2] << 0), f >= 8 && (a = s[7] << 16 ^ s[6] << 8 ^ s[5] << 0), this.voxMap.set(n, { vc: r, vs: c, vr: a });
       }
     }
   }
@@ -335,28 +338,28 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   // boundary
   isBoundary(t, e) {
-    const o = this.vp_to_xyz(t), s = o[0] === 0 || o[0] === 255, n = o[1] === 0 || o[1] === 255, r = o[2] === 0 || o[2] === 255;
+    const o = this.vp_to_xyz(t), s = o[0] === 0 || o[0] === 255, i = o[1] === 0 || o[1] === 255, n = o[2] === 0 || o[2] === 255;
     switch (e) {
       case "x":
         if (s) return !0;
       case "y":
-        if (n) return !0;
+        if (i) return !0;
       case "z":
-        if (r) return !0;
+        if (n) return !0;
       case "xy":
-        if (s && n) return !0;
+        if (s && i) return !0;
       case "yz":
-        if (n && r) return !0;
+        if (i && n) return !0;
       case "zx":
-        if (r && s) return !0;
+        if (n && s) return !0;
       case "xyz":
-        if (s && n && r) return !0;
+        if (s && i && n) return !0;
     }
     return !1;
   }
   // find voxel
   findVoxelPos(t, e) {
-    return Array.isArray(e) ? t += e[0] * s0 + e[1] * o0 + e[2] * e0 : typeof e == "string" && (e = e.split(""), e[0] === "p" ? t += s0 : e[0] === "n" && (t -= s0), e[1] === "p" ? t += o0 : e[1] === "n" && (t -= o0), e[2] === "p" ? t += e0 : e[2] === "n" && (t -= e0)), t;
+    return Array.isArray(e) ? t += e[0] * o0 + e[1] * e0 + e[2] * t0 : typeof e == "string" && (e = e.split(""), e[0] === "p" ? t += o0 : e[0] === "n" && (t -= o0), e[1] === "p" ? t += e0 : e[1] === "n" && (t -= e0), e[2] === "p" ? t += t0 : e[2] === "n" && (t -= t0)), t;
   }
   findVoxel(t, e) {
     return t = this.findVoxelPos(t, e), this.voxMap.has(t) ? t : null;
@@ -365,19 +368,19 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   findFaceNeighbors(t) {
     const e = [];
     for (let o = 0; o < 6; o++)
-      e.push(this.findVoxel(t, C.Faces[o]));
+      e.push(this.findVoxel(t, b.Faces[o]));
     return e;
   }
   findEdgeNeighbors(t) {
     const e = [];
     for (let o = 0; o < 12; o++)
-      e.push(this.findVoxel(t, C.Edges[o]));
+      e.push(this.findVoxel(t, b.Edges[o]));
     return e;
   }
   findVertexNeighbors(t) {
     const e = [];
     for (let o = 0; o < 8; o++)
-      e.push(this.findVoxel(t, C.Vertices[o]));
+      e.push(this.findVoxel(t, b.Vertices[o]));
     return e;
   }
   findAllNeighbors(t) {
@@ -398,13 +401,13 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     let e, o = 0;
     e = this.findFaceNeighbors(t);
     for (let s = 0; s < 6; s++)
-      e[s] && (o |= n0[s]);
+      e[s] && (o |= s0[s]);
     e = this.findEdgeNeighbors(t);
     for (let s = 0; s < 12; s++)
-      e[s] && (o |= n0[6 + s]);
+      e[s] && (o |= s0[6 + s]);
     e = this.findVertexNeighbors(t);
     for (let s = 0; s < 8; s++)
-      e[s] && (o |= n0[18 + s]);
+      e[s] && (o |= s0[18 + s]);
     return o;
   }
   __findAllVoxNB() {
@@ -415,17 +418,17 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   }
   // mesh
   __fillVoxelMesh() {
-    function t(e, o, s, n) {
-      o = e.findVoxelPos(o, s), e.voxMap.set(o, { vc: n });
+    function t(e, o, s, i) {
+      o = e.findVoxelPos(o, s), e.voxMap.set(o, { vc: i });
     }
     for (let e = 0; e < 2; e++) {
       const o = this.voxMap, s = Array.from(o);
-      for (const [n, { vc: r }] of s) {
-        if (this.isBoundary(n, "x") || this.isBoundary(n, "z")) continue;
-        const i = this.findEdgeNeighbors(n).map((c) => c !== null);
-        for (let c = 0; c < 12; c += 4) {
-          const h = i[c] || i[c + 1], l = i[c + 2] || i[c + 3];
-          h && l || (h || (i[c] ? t(this, n, C.Edges[c + 1], r) : t(this, n, C.Edges[c], r)), l || (i[c + 2] ? t(this, n, C.Edges[c + 3], r) : t(this, n, C.Edges[c + 2], r)));
+      for (const [i, { vc: n }] of s) {
+        if (this.isBoundary(i, "x") || this.isBoundary(i, "z")) continue;
+        const c = this.findEdgeNeighbors(i).map((a) => a !== null);
+        for (let a = 0; a < 12; a += 4) {
+          const f = c[a] || c[a + 1], l = c[a + 2] || c[a + 3];
+          f && l || (f || (c[a] ? t(this, i, b.Edges[a + 1], n) : t(this, i, b.Edges[a], n)), l || (c[a + 2] ? t(this, i, b.Edges[a + 3], n) : t(this, i, b.Edges[a + 2], n)));
         }
       }
     }
@@ -435,27 +438,27 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     const t = /* @__PURE__ */ new Map(), e = this.voxMap;
     let o;
     for (const s of e.keys()) {
-      const n = this.vp_to_xyz(s), r = n[0], a = n[1], i = n[2];
+      const i = this.vp_to_xyz(s), n = i[0], r = i[1], c = i[2];
       t.set(s, !1);
-      for (let c = 0; c < 6; c++) {
-        switch (c) {
+      for (let a = 0; a < 6; a++) {
+        switch (a) {
           case 0:
-            o = this.xyz_to_vp(r + 1, a, i);
+            o = this.xyz_to_vp(n + 1, r, c);
             break;
           case 1:
-            o = this.xyz_to_vp(r, a + 1, i);
+            o = this.xyz_to_vp(n, r + 1, c);
             break;
           case 2:
-            o = this.xyz_to_vp(r, a, i + 1);
+            o = this.xyz_to_vp(n, r, c + 1);
             break;
           case 3:
-            o = this.xyz_to_vp(r - 1, a, i);
+            o = this.xyz_to_vp(n - 1, r, c);
             break;
           case 4:
-            o = this.xyz_to_vp(r, a - 1, i);
+            o = this.xyz_to_vp(n, r - 1, c);
             break;
           case 5:
-            o = this.xyz_to_vp(r, a, i - 1);
+            o = this.xyz_to_vp(n, r, c - 1);
             break;
         }
         if (!e.get(o)) {
@@ -464,23 +467,23 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
         }
       }
     }
-    for (const [s, n] of t.entries())
-      n || e.delete(s);
+    for (const [s, i] of t.entries())
+      i || e.delete(s);
   }
   __prepareVoxelMesh() {
     this.options.shelling === !0 && this.__shellVoxelMesh();
-    const t = this._origin[0], e = this._origin[1], o = this._origin[2], s = this.voxMap, n = /* @__PURE__ */ new Map(), r = this;
-    let a, i;
-    r.options.voxMapType = "uintVoxMap", Array.from(s).forEach((c) => {
-      i = r.vp_to_xyz(c[0]), i[0] = i[0] - t, i[1] = i[1] - e, i[2] = i[2] - o, a = r.xyz_to_vp(i[0], i[1], i[2]), a && n.set(a, c[1]);
-    }), this.voxMap = n, this.position.set(t, e, o);
+    const t = this._origin[0], e = this._origin[1], o = this._origin[2], s = this.voxMap, i = /* @__PURE__ */ new Map(), n = this;
+    let r, c;
+    n.options.voxMapType = "uintVoxMap", Array.from(s).forEach((a) => {
+      c = n.vp_to_xyz(a[0]), c[0] = c[0] - t, c[1] = c[1] - e, c[2] = c[2] - o, r = n.xyz_to_vp(c[0], c[1], c[2]), r && i.set(r, a[1]);
+    }), this.voxMap = i, this.position.set(t, e, o);
   }
   __createVoxMeshGeometry(t = null) {
     t || (t = this.voxMap);
-    const e = t.size, o = new m0();
+    const e = t.size, o = new v0();
     o.instanceCount = e;
-    let s, n;
-    this.voxType === "cube" ? (n = [
+    let s, i;
+    this.voxType === "cube" ? (i = [
       0,
       1,
       2,
@@ -523,30 +526,29 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
       21,
       23
       // Front  = 5
-    ], s = 24) : this.voxType === "box" ? (n = [0, 2, 1, 2, 3, 1, 4, 6, 5, 6, 7, 5, 8, 10, 9, 10, 11, 9, 12, 14, 13, 14, 15, 13, 16, 18, 17, 18, 19, 17, 20, 22, 21, 22, 23, 21], s = 24) : this.voxType === "sphere8" ? (n = [0, 9, 10, 1, 10, 11, 2, 11, 12, 3, 12, 13, 4, 13, 14, 5, 14, 15, 6, 15, 16, 7, 16, 17, 10, 9, 19, 9, 18, 19, 11, 10, 20, 10, 19, 20, 12, 11, 21, 11, 20, 21, 13, 12, 22, 12, 21, 22, 14, 13, 23, 13, 22, 23, 15, 14, 24, 14, 23, 24, 16, 15, 25, 15, 24, 25, 17, 16, 26, 16, 25, 26, 19, 18, 28, 18, 27, 28, 20, 19, 29, 19, 28, 29, 21, 20, 30, 20, 29, 30, 22, 21, 31, 21, 30, 31, 23, 22, 32, 22, 31, 32, 24, 23, 33, 23, 32, 33, 25, 24, 34, 24, 33, 34, 26, 25, 35, 25, 34, 35, 28, 27, 37, 29, 28, 38, 30, 29, 39, 31, 30, 40, 32, 31, 41, 33, 32, 42, 34, 33, 43, 35, 34, 44], s = 45) : this.voxType === "sphere" ? (n = [0, 17, 18, 1, 18, 19, 2, 19, 20, 3, 20, 21, 4, 21, 22, 5, 22, 23, 6, 23, 24, 7, 24, 25, 8, 25, 26, 9, 26, 27, 10, 27, 28, 11, 28, 29, 12, 29, 30, 13, 30, 31, 14, 31, 32, 15, 32, 33, 18, 17, 35, 17, 34, 35, 19, 18, 36, 18, 35, 36, 20, 19, 37, 19, 36, 37, 21, 20, 38, 20, 37, 38, 22, 21, 39, 21, 38, 39, 23, 22, 40, 22, 39, 40, 24, 23, 41, 23, 40, 41, 25, 24, 42, 24, 41, 42, 26, 25, 43, 25, 42, 43, 27, 26, 44, 26, 43, 44, 28, 27, 45, 27, 44, 45, 29, 28, 46, 28, 45, 46, 30, 29, 47, 29, 46, 47, 31, 30, 48, 30, 47, 48, 32, 31, 49, 31, 48, 49, 33, 32, 50, 32, 49, 50, 35, 34, 52, 34, 51, 52, 36, 35, 53, 35, 52, 53, 37, 36, 54, 36, 53, 54, 38, 37, 55, 37, 54, 55, 39, 38, 56, 38, 55, 56, 40, 39, 57, 39, 56, 57, 41, 40, 58, 40, 57, 58, 42, 41, 59, 41, 58, 59, 43, 42, 60, 42, 59, 60, 44, 43, 61, 43, 60, 61, 45, 44, 62, 44, 61, 62, 46, 45, 63, 45, 62, 63, 47, 46, 64, 46, 63, 64, 48, 47, 65, 47, 64, 65, 49, 48, 66, 48, 65, 66, 50, 49, 67, 49, 66, 67, 52, 51, 69, 51, 68, 69, 53, 52, 70, 52, 69, 70, 54, 53, 71, 53, 70, 71, 55, 54, 72, 54, 71, 72, 56, 55, 73, 55, 72, 73, 57, 56, 74, 56, 73, 74, 58, 57, 75, 57, 74, 75, 59, 58, 76, 58, 75, 76, 60, 59, 77, 59, 76, 77, 61, 60, 78, 60, 77, 78, 62, 61, 79, 61, 78, 79, 63, 62, 80, 62, 79, 80, 64, 63, 81, 63, 80, 81, 65, 64, 82, 64, 81, 82, 66, 65, 83, 65, 82, 83, 67, 66, 84, 66, 83, 84, 69, 68, 86, 68, 85, 86, 70, 69, 87, 69, 86, 87, 71, 70, 88, 70, 87, 88, 72, 71, 89, 71, 88, 89, 73, 72, 90, 72, 89, 90, 74, 73, 91, 73, 90, 91, 75, 74, 92, 74, 91, 92, 76, 75, 93, 75, 92, 93, 77, 76, 94, 76, 93, 94, 78, 77, 95, 77, 94, 95, 79, 78, 96, 78, 95, 96, 80, 79, 97, 79, 96, 97, 81, 80, 98, 80, 97, 98, 82, 81, 99, 81, 98, 99, 83, 82, 100, 82, 99, 100, 84, 83, 101, 83, 100, 101, 86, 85, 103, 85, 102, 103, 87, 86, 104, 86, 103, 104, 88, 87, 105, 87, 104, 105, 89, 88, 106, 88, 105, 106, 90, 89, 107, 89, 106, 107, 91, 90, 108, 90, 107, 108, 92, 91, 109, 91, 108, 109, 93, 92, 110, 92, 109, 110, 94, 93, 111, 93, 110, 111, 95, 94, 112, 94, 111, 112, 96, 95, 113, 95, 112, 113, 97, 96, 114, 96, 113, 114, 98, 97, 115, 97, 114, 115, 99, 98, 116, 98, 115, 116, 100, 99, 117, 99, 116, 117, 101, 100, 118, 100, 117, 118, 103, 102, 120, 102, 119, 120, 104, 103, 121, 103, 120, 121, 105, 104, 122, 104, 121, 122, 106, 105, 123, 105, 122, 123, 107, 106, 124, 106, 123, 124, 108, 107, 125, 107, 124, 125, 109, 108, 126, 108, 125, 126, 110, 109, 127, 109, 126, 127, 111, 110, 128, 110, 127, 128, 112, 111, 129, 111, 128, 129, 113, 112, 130, 112, 129, 130, 114, 113, 131, 113, 130, 131, 115, 114, 132, 114, 131, 132, 116, 115, 133, 115, 132, 133, 117, 116, 134, 116, 133, 134, 118, 117, 135, 117, 134, 135, 120, 119, 137, 121, 120, 138, 122, 121, 139, 123, 122, 140, 124, 123, 141, 125, 124, 142, 126, 125, 143, 127, 126, 144, 128, 127, 145, 129, 128, 146, 130, 129, 147, 131, 130, 148, 132, 131, 149, 133, 132, 150, 134, 133, 151, 135, 134, 152], s = 153) : this.voxType === "cylinder" ? (n = [0, 17, 1, 17, 18, 1, 1, 18, 2, 18, 19, 2, 2, 19, 3, 19, 20, 3, 3, 20, 4, 20, 21, 4, 4, 21, 5, 21, 22, 5, 5, 22, 6, 22, 23, 6, 6, 23, 7, 23, 24, 7, 7, 24, 8, 24, 25, 8, 8, 25, 9, 25, 26, 9, 9, 26, 10, 26, 27, 10, 10, 27, 11, 27, 28, 11, 11, 28, 12, 28, 29, 12, 12, 29, 13, 29, 30, 13, 13, 30, 14, 30, 31, 14, 14, 31, 15, 31, 32, 15, 15, 32, 16, 32, 33, 16, 50, 51, 34, 51, 52, 35, 52, 53, 36, 53, 54, 37, 54, 55, 38, 55, 56, 39, 56, 57, 40, 57, 58, 41, 58, 59, 42, 59, 60, 43, 60, 61, 44, 61, 62, 45, 62, 63, 46, 63, 64, 47, 64, 65, 48, 65, 66, 49, 84, 83, 67, 85, 84, 68, 86, 85, 69, 87, 86, 70, 88, 87, 71, 89, 88, 72, 90, 89, 73, 91, 90, 74, 92, 91, 75, 93, 92, 76, 94, 93, 77, 95, 94, 78, 96, 95, 79, 97, 96, 80, 98, 97, 81, 99, 98, 82], s = 100) : this.voxType === "tetrahedron" ? (n = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], s = 12) : this.voxType === "octahedron" ? (n = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], s = 24) : this.voxType === "lego" && (n = [0, 2, 1, 2, 3, 1, 4, 6, 5, 6, 7, 5, 8, 10, 9, 10, 11, 9, 12, 14, 13, 14, 15, 13, 16, 18, 17, 18, 19, 17, 20, 22, 21, 22, 23, 21, 24, 41, 25, 41, 42, 25, 25, 42, 26, 42, 43, 26, 26, 43, 27, 43, 44, 27, 27, 44, 28, 44, 45, 28, 28, 45, 29, 45, 46, 29, 29, 46, 30, 46, 47, 30, 30, 47, 31, 47, 48, 31, 31, 48, 32, 48, 49, 32, 32, 49, 33, 49, 50, 33, 33, 50, 34, 50, 51, 34, 34, 51, 35, 51, 52, 35, 35, 52, 36, 52, 53, 36, 36, 53, 37, 53, 54, 37, 37, 54, 38, 54, 55, 38, 38, 55, 39, 55, 56, 39, 39, 56, 40, 56, 57, 40, 74, 75, 58, 75, 76, 59, 76, 77, 60, 77, 78, 61, 78, 79, 62, 79, 80, 63, 80, 81, 64, 81, 82, 65, 82, 83, 66, 83, 84, 67, 84, 85, 68, 85, 86, 69, 86, 87, 70, 87, 88, 71, 88, 89, 72, 89, 90, 73, 108, 107, 91, 109, 108, 92, 110, 109, 93, 111, 110, 94, 112, 111, 95, 113, 112, 96, 114, 113, 97, 115, 114, 98, 116, 115, 99, 117, 116, 100, 118, 117, 101, 119, 118, 102, 120, 119, 103, 121, 120, 104, 122, 121, 105, 123, 122, 106], s = 124), o.setIndex(new h0(new Uint8Array(n), 1));
-    const r = new Uint32Array(s);
-    for (let u = 0; u < s; u++) r[u] = u;
-    o.setAttribute("aVoxVertex", new h0(r, 1));
-    const a = new Uint32Array(e * this.voxDim);
-    if (o.setAttribute("aVoxData", new Q(a, this.voxDim)), this.voxType === "cube") {
-      const u = new Uint32Array(this.__findAllVoxNB());
-      o.setAttribute("aVoxNB", new Q(u, 1));
+    ], s = 24) : this.voxType === "box" ? (i = [0, 2, 1, 2, 3, 1, 4, 6, 5, 6, 7, 5, 8, 10, 9, 10, 11, 9, 12, 14, 13, 14, 15, 13, 16, 18, 17, 18, 19, 17, 20, 22, 21, 22, 23, 21], s = 24) : this.voxType === "sphere8" ? (i = [0, 9, 10, 1, 10, 11, 2, 11, 12, 3, 12, 13, 4, 13, 14, 5, 14, 15, 6, 15, 16, 7, 16, 17, 10, 9, 19, 9, 18, 19, 11, 10, 20, 10, 19, 20, 12, 11, 21, 11, 20, 21, 13, 12, 22, 12, 21, 22, 14, 13, 23, 13, 22, 23, 15, 14, 24, 14, 23, 24, 16, 15, 25, 15, 24, 25, 17, 16, 26, 16, 25, 26, 19, 18, 28, 18, 27, 28, 20, 19, 29, 19, 28, 29, 21, 20, 30, 20, 29, 30, 22, 21, 31, 21, 30, 31, 23, 22, 32, 22, 31, 32, 24, 23, 33, 23, 32, 33, 25, 24, 34, 24, 33, 34, 26, 25, 35, 25, 34, 35, 28, 27, 37, 29, 28, 38, 30, 29, 39, 31, 30, 40, 32, 31, 41, 33, 32, 42, 34, 33, 43, 35, 34, 44], s = 45) : this.voxType === "sphere" ? (i = [0, 17, 18, 1, 18, 19, 2, 19, 20, 3, 20, 21, 4, 21, 22, 5, 22, 23, 6, 23, 24, 7, 24, 25, 8, 25, 26, 9, 26, 27, 10, 27, 28, 11, 28, 29, 12, 29, 30, 13, 30, 31, 14, 31, 32, 15, 32, 33, 18, 17, 35, 17, 34, 35, 19, 18, 36, 18, 35, 36, 20, 19, 37, 19, 36, 37, 21, 20, 38, 20, 37, 38, 22, 21, 39, 21, 38, 39, 23, 22, 40, 22, 39, 40, 24, 23, 41, 23, 40, 41, 25, 24, 42, 24, 41, 42, 26, 25, 43, 25, 42, 43, 27, 26, 44, 26, 43, 44, 28, 27, 45, 27, 44, 45, 29, 28, 46, 28, 45, 46, 30, 29, 47, 29, 46, 47, 31, 30, 48, 30, 47, 48, 32, 31, 49, 31, 48, 49, 33, 32, 50, 32, 49, 50, 35, 34, 52, 34, 51, 52, 36, 35, 53, 35, 52, 53, 37, 36, 54, 36, 53, 54, 38, 37, 55, 37, 54, 55, 39, 38, 56, 38, 55, 56, 40, 39, 57, 39, 56, 57, 41, 40, 58, 40, 57, 58, 42, 41, 59, 41, 58, 59, 43, 42, 60, 42, 59, 60, 44, 43, 61, 43, 60, 61, 45, 44, 62, 44, 61, 62, 46, 45, 63, 45, 62, 63, 47, 46, 64, 46, 63, 64, 48, 47, 65, 47, 64, 65, 49, 48, 66, 48, 65, 66, 50, 49, 67, 49, 66, 67, 52, 51, 69, 51, 68, 69, 53, 52, 70, 52, 69, 70, 54, 53, 71, 53, 70, 71, 55, 54, 72, 54, 71, 72, 56, 55, 73, 55, 72, 73, 57, 56, 74, 56, 73, 74, 58, 57, 75, 57, 74, 75, 59, 58, 76, 58, 75, 76, 60, 59, 77, 59, 76, 77, 61, 60, 78, 60, 77, 78, 62, 61, 79, 61, 78, 79, 63, 62, 80, 62, 79, 80, 64, 63, 81, 63, 80, 81, 65, 64, 82, 64, 81, 82, 66, 65, 83, 65, 82, 83, 67, 66, 84, 66, 83, 84, 69, 68, 86, 68, 85, 86, 70, 69, 87, 69, 86, 87, 71, 70, 88, 70, 87, 88, 72, 71, 89, 71, 88, 89, 73, 72, 90, 72, 89, 90, 74, 73, 91, 73, 90, 91, 75, 74, 92, 74, 91, 92, 76, 75, 93, 75, 92, 93, 77, 76, 94, 76, 93, 94, 78, 77, 95, 77, 94, 95, 79, 78, 96, 78, 95, 96, 80, 79, 97, 79, 96, 97, 81, 80, 98, 80, 97, 98, 82, 81, 99, 81, 98, 99, 83, 82, 100, 82, 99, 100, 84, 83, 101, 83, 100, 101, 86, 85, 103, 85, 102, 103, 87, 86, 104, 86, 103, 104, 88, 87, 105, 87, 104, 105, 89, 88, 106, 88, 105, 106, 90, 89, 107, 89, 106, 107, 91, 90, 108, 90, 107, 108, 92, 91, 109, 91, 108, 109, 93, 92, 110, 92, 109, 110, 94, 93, 111, 93, 110, 111, 95, 94, 112, 94, 111, 112, 96, 95, 113, 95, 112, 113, 97, 96, 114, 96, 113, 114, 98, 97, 115, 97, 114, 115, 99, 98, 116, 98, 115, 116, 100, 99, 117, 99, 116, 117, 101, 100, 118, 100, 117, 118, 103, 102, 120, 102, 119, 120, 104, 103, 121, 103, 120, 121, 105, 104, 122, 104, 121, 122, 106, 105, 123, 105, 122, 123, 107, 106, 124, 106, 123, 124, 108, 107, 125, 107, 124, 125, 109, 108, 126, 108, 125, 126, 110, 109, 127, 109, 126, 127, 111, 110, 128, 110, 127, 128, 112, 111, 129, 111, 128, 129, 113, 112, 130, 112, 129, 130, 114, 113, 131, 113, 130, 131, 115, 114, 132, 114, 131, 132, 116, 115, 133, 115, 132, 133, 117, 116, 134, 116, 133, 134, 118, 117, 135, 117, 134, 135, 120, 119, 137, 121, 120, 138, 122, 121, 139, 123, 122, 140, 124, 123, 141, 125, 124, 142, 126, 125, 143, 127, 126, 144, 128, 127, 145, 129, 128, 146, 130, 129, 147, 131, 130, 148, 132, 131, 149, 133, 132, 150, 134, 133, 151, 135, 134, 152], s = 153) : this.voxType === "cylinder" ? (i = [0, 17, 1, 17, 18, 1, 1, 18, 2, 18, 19, 2, 2, 19, 3, 19, 20, 3, 3, 20, 4, 20, 21, 4, 4, 21, 5, 21, 22, 5, 5, 22, 6, 22, 23, 6, 6, 23, 7, 23, 24, 7, 7, 24, 8, 24, 25, 8, 8, 25, 9, 25, 26, 9, 9, 26, 10, 26, 27, 10, 10, 27, 11, 27, 28, 11, 11, 28, 12, 28, 29, 12, 12, 29, 13, 29, 30, 13, 13, 30, 14, 30, 31, 14, 14, 31, 15, 31, 32, 15, 15, 32, 16, 32, 33, 16, 50, 51, 34, 51, 52, 35, 52, 53, 36, 53, 54, 37, 54, 55, 38, 55, 56, 39, 56, 57, 40, 57, 58, 41, 58, 59, 42, 59, 60, 43, 60, 61, 44, 61, 62, 45, 62, 63, 46, 63, 64, 47, 64, 65, 48, 65, 66, 49, 84, 83, 67, 85, 84, 68, 86, 85, 69, 87, 86, 70, 88, 87, 71, 89, 88, 72, 90, 89, 73, 91, 90, 74, 92, 91, 75, 93, 92, 76, 94, 93, 77, 95, 94, 78, 96, 95, 79, 97, 96, 80, 98, 97, 81, 99, 98, 82], s = 100) : this.voxType === "tetrahedron" ? (i = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], s = 12) : this.voxType === "octahedron" ? (i = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], s = 24) : this.voxType === "lego" && (i = [0, 2, 1, 2, 3, 1, 4, 6, 5, 6, 7, 5, 8, 10, 9, 10, 11, 9, 12, 14, 13, 14, 15, 13, 16, 18, 17, 18, 19, 17, 20, 22, 21, 22, 23, 21, 24, 41, 25, 41, 42, 25, 25, 42, 26, 42, 43, 26, 26, 43, 27, 43, 44, 27, 27, 44, 28, 44, 45, 28, 28, 45, 29, 45, 46, 29, 29, 46, 30, 46, 47, 30, 30, 47, 31, 47, 48, 31, 31, 48, 32, 48, 49, 32, 32, 49, 33, 49, 50, 33, 33, 50, 34, 50, 51, 34, 34, 51, 35, 51, 52, 35, 35, 52, 36, 52, 53, 36, 36, 53, 37, 53, 54, 37, 37, 54, 38, 54, 55, 38, 38, 55, 39, 55, 56, 39, 39, 56, 40, 56, 57, 40, 74, 75, 58, 75, 76, 59, 76, 77, 60, 77, 78, 61, 78, 79, 62, 79, 80, 63, 80, 81, 64, 81, 82, 65, 82, 83, 66, 83, 84, 67, 84, 85, 68, 85, 86, 69, 86, 87, 70, 87, 88, 71, 88, 89, 72, 89, 90, 73, 108, 107, 91, 109, 108, 92, 110, 109, 93, 111, 110, 94, 112, 111, 95, 113, 112, 96, 114, 113, 97, 115, 114, 98, 116, 115, 99, 117, 116, 100, 118, 117, 101, 119, 118, 102, 120, 119, 103, 121, 120, 104, 122, 121, 105, 123, 122, 106], s = 124), o.setIndex(new c0(new Uint8Array(i), 1));
+    const n = new Uint32Array(s);
+    for (let x = 0; x < s; x++) n[x] = x;
+    o.setAttribute("aVoxVertex", new c0(n, 1));
+    const r = new Uint32Array(e * this.voxDim);
+    if (o.setAttribute("aVoxData", new J(r, this.voxDim)), this.voxType === "cube") {
+      const x = new Uint32Array(this.__findAllVoxNB());
+      o.setAttribute("aVoxNB", new J(x, 1));
     }
-    let i = 0;
-    const c = this.voxDim, h = 16776961, l = 0;
-    for (const [u, p] of t.entries())
-      a[i] = u, a[i + 1] = p.vc, c >= 3 && (a[i + 2] = p.vs === void 0 ? h : p.vs), c >= 4 && (a[i + 3] = p.vr === void 0 ? l : p.vr), p.vi = i, i += c;
+    let c = 0;
+    const a = this.voxDim, f = 16776961, l = 0;
+    for (const [x, u] of t.entries())
+      r[c] = x, r[c + 1] = u.vc, a >= 3 && (r[c + 2] = u.vs === void 0 ? f : u.vs), a >= 4 && (r[c + 3] = u.vr === void 0 ? l : u.vr), u.vi = c, c += a;
     return o;
   }
   __createVoxMeshMaterial(t) {
-    var a;
-    const e = this.voxType.toUpperCase() + "_VOXEL", o = (a = this.atlas) != null && a.uvScale ? this.atlas.uvScale : [1, 1 / 3], s = this.voxDim;
+    const e = this.voxType.toUpperCase() + "_VOXEL", o = this.atlas?.uvScale ? this.atlas.uvScale : [1, 1 / 3], s = this.voxDim;
     s >= 3 && (t = { ...t, transparent: !0 });
-    const n = new V0(t), r = {
-      uvScale: { value: new p0(o[0], o[1]) }
+    const i = new _0(t), n = {
+      uvScale: { value: new x0(o[0], o[1]) }
     };
-    return n.onBeforeCompile = (i) => {
-      i.uniforms = { ...i.uniforms, ...r }, i.vertexShader = `
+    return i.onBeforeCompile = (r) => {
+      r.uniforms = { ...r.uniforms, ...n }, r.vertexShader = `
                 #define ${e}
                 #define VOX_DIM ${s}
                 #if defined( CUBE_VOXEL )
@@ -676,7 +678,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
                     );
                 }
 
-                ${i.vertexShader.replace(
+                ${r.vertexShader.replace(
         "#include <uv_vertex>",
         `
                     #include <uv_vertex>
@@ -709,7 +711,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
                     #endif
                     `
       )}
-            `, i.vertexShader = i.vertexShader.replace(
+            `, r.vertexShader = r.vertexShader.replace(
         "#include <color_vertex>",
         `
                 #include <color_vertex>
@@ -719,7 +721,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
                     vVoxColor *= ambientOcc( int(aVoxVertex), int(aVoxNB) );
                 #endif
                 `
-      ), i.vertexShader = i.vertexShader.replace(
+      ), r.vertexShader = r.vertexShader.replace(
         "#include <beginnormal_vertex>",
         `
                 #ifdef CUBE_VOXEL
@@ -730,7 +732,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
                     vec3 objectNormal = vec3( NORMALS[ vi ], NORMALS[ vi + 1 ], NORMALS[ vi + 2 ] );
                 #endif
                 `
-      ), i.vertexShader = i.vertexShader.replace(
+      ), r.vertexShader = r.vertexShader.replace(
         "#include <begin_vertex>",
         `
                 // voxel position
@@ -774,14 +776,14 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
 
                 vec3 transformed = vpos;
                 `
-      ), i.fragmentShader = `
+      ), r.fragmentShader = `
                 #define ${e}
                 #define VOX_DIM ${s}
                 varying vec3 vVoxColor; // xyz = ( r, g, b )
                 varying vec4 vVoxSize;  // xyzw = ( size, opacity, life, null )
                 varying vec4 vVoxRot;   // xyzw = ( rotx, roty, rotz, null )
 
-                ${i.fragmentShader.replace(
+                ${r.fragmentShader.replace(
         "vec4 diffuseColor = vec4( diffuse, opacity );",
         `
                     vec4 diffuseColor = vec4( vVoxColor, opacity );
@@ -793,15 +795,14 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
                     `
       )}
             `;
-    }, n;
+    }, i;
   }
   __updateVoxMeshGeometry() {
     this.geometry && this.geometry.dispose(), this.geometry = this.__createVoxMeshGeometry(this.voxMap);
   }
   __updateVoxMeshMaterial(t = {}) {
-    var s, n;
     this.material && this.material.dispose();
-    const e = (s = this.atlas) != null && s.diffuseMap ? this.atlas.diffuseMap : null, o = (n = this.atlas) != null && n.normalMap ? this.atlas.normalMap : null;
+    const e = this.atlas?.diffuseMap ? this.atlas.diffuseMap : null, o = this.atlas?.normalMap ? this.atlas.normalMap : null;
     this.material = this.__createVoxMeshMaterial({
       map: e,
       normalMap: o,
@@ -825,7 +826,7 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     return [(t >> 16 & 255) / 255, (t >> 8 & 255) / 255, (t & 255) / 255];
   }
   world_to_local(t) {
-    return t.applyMatrix4(x0.copy(this.matrixWorld).invert()), t;
+    return t.applyMatrix4(h0.copy(this.matrixWorld).invert()), t;
   }
   local_to_world(t) {
     return t.applyMatrix4(this.matrixWorld), t;
@@ -841,18 +842,18 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     this.__drawVoxel(o);
   }
   __drawVoxel(t) {
-    if (Y === null) {
-      const o = new M0(1.02, 1.02, 1.02), s = new S0({ color: 16711680, opacity: 0.5, transparent: !0 });
-      Y = new c0(o, s), this.threefy.scene.add(Y);
+    if ($ === null) {
+      const o = new y0(1.02, 1.02, 1.02), s = new m0({ color: 16711680, opacity: 0.5, transparent: !0 });
+      $ = new a0(o, s), this.threefy.scene.add($);
     }
     const e = this.__getVoxelCenter(t);
-    Y.position.copy(e);
+    $.position.copy(e);
   }
   __drawVoxelBoxes(t) {
     if (G === null) {
-      G = new E0();
+      G = new V0();
       for (let e = 0; e < 12; e++)
-        G.add(new L0(new f0(), 16711680));
+        G.add(new O0(new l0(), 16711680));
       this.threefy.scene.add(G);
     }
     for (let e = 0; e < 12; e++)
@@ -860,24 +861,24 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     t.forEach((e, o) => {
       const s = G.children[o];
       if (e) {
-        const n = this.__getVoxelCenter(e);
-        $.setFromMatrixScale(this.matrixWorld);
-        const r = $.multiply({ x: 1.02, y: 1.02, z: 1.02 });
-        s.visible = !0, s.box.setFromCenterAndSize(n, r);
+        const i = this.__getVoxelCenter(e);
+        j.setFromMatrixScale(this.matrixWorld);
+        const n = j.multiply({ x: 1.02, y: 1.02, z: 1.02 });
+        s.visible = !0, s.box.setFromCenterAndSize(i, n);
       }
     });
   }
   __drawArrowHelper(t, e) {
-    P === null && (P = new R0(), P.setLength(1), P.setColor(16711680), this.threefy.scene.add(P)), P.position.copy(t), P.setDirection(e);
+    P === null && (P = new M0(), P.setLength(1), P.setColor(16711680), this.threefy.scene.add(P)), P.position.copy(t), P.setDirection(e);
   }
   __updateDrawNeighbors() {
-    const t = this.threefy, e = t.camera, o = t.raycaster, s = t.mouseMovePosition, n = [];
-    if (o.setFromCamera(s, e), this.raycast(o, n), n.length > 0) {
-      const { point: r, normal: a, color: i } = n[0];
-      H.copy(r), H.addScaledVector(a, -0.5);
-      const c = this.getVoxelPos(H);
-      let h;
-      h = this.findFaceNeighbors(c), this.__drawVoxelBoxes(h);
+    const t = this.threefy, e = t.camera, o = t.raycaster, s = t.mouseMovePosition, i = [];
+    if (o.setFromCamera(s, e), this.raycast(o, i), i.length > 0) {
+      const { point: n, normal: r, color: c } = i[0];
+      H.copy(n), H.addScaledVector(r, -0.5);
+      const a = this.getVoxelPos(H);
+      let f;
+      f = this.findFaceNeighbors(a), this.__drawVoxelBoxes(f);
     }
   }
   __deleteVoxel(t, e) {
@@ -889,44 +890,44 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     X.copy(t), X.addScaledVector(e, -0.5);
     const o = this.getVoxelPos(X), s = this.voxMap.get(o);
     X.addScaledVector(e, 1);
-    const n = this.getVoxelPos(X), r = this.geometry.attributes.aVoxData.array.length;
-    this.addVoxels([[n, { ...s, vi: r }]]);
+    const i = this.getVoxelPos(X), n = this.geometry.attributes.aVoxData.array.length;
+    this.addVoxels([[i, { ...s, vi: n }]]);
   }
   // typed array
   addVoxData(t, e) {
-    const o = this.geometry.attributes.aVoxData.array, s = this.voxDim, n = o.length / s, r = new Uint32Array((n + 1) * s);
-    r.set(o, 0);
-    const a = n * s;
-    r[a] = t, r[a + 1] = e.vc, s >= 3 && (r[a + 2] = e.vs), s >= 4 && (r[a + 3] = e.vr), this.geometry.setAttribute("aVoxData", new Q(r, s)), this.geometry.attributes.aVoxData.needsUpdate = !0, this.voxMap.set(t, { ...e, vi: a });
+    const o = this.geometry.attributes.aVoxData.array, s = this.voxDim, i = o.length / s, n = new Uint32Array((i + 1) * s);
+    n.set(o, 0);
+    const r = i * s;
+    n[r] = t, n[r + 1] = e.vc, s >= 3 && (n[r + 2] = e.vs), s >= 4 && (n[r + 3] = e.vr), this.geometry.setAttribute("aVoxData", new J(n, s)), this.geometry.attributes.aVoxData.needsUpdate = !0, this.voxMap.set(t, { ...e, vi: r });
   }
   __concatTypedArrays(t, ...e) {
-    const o = e.reduce((n, r) => n + r.length, 0), s = new t(o);
-    return e.reduce((n, r) => (s.set(r, n), n + r.length), 0), s;
+    const o = e.reduce((i, n) => i + n.length, 0), s = new t(o);
+    return e.reduce((i, n) => (s.set(n, i), i + n.length), 0), s;
   }
   __deleteTypedElement(t, e, o) {
     const s = [];
     s.push(e.subarray(0, o[0]));
-    for (let r = 0; r < o.length - 1; r++)
-      s.push(e.subarray(o[r] + 1, o[r + 1]));
-    const n = o.length - 1;
-    return s.push(e.subarray(o[n] + 1)), this.__concatTypedArrays(t, ...s);
+    for (let n = 0; n < o.length - 1; n++)
+      s.push(e.subarray(o[n] + 1, o[n + 1]));
+    const i = o.length - 1;
+    return s.push(e.subarray(o[i] + 1)), this.__concatTypedArrays(t, ...s);
   }
   // intersection
   intersectRay(t, e) {
-    const o = I.copy(t), s = $.copy(e);
+    const o = I.copy(t), s = j.copy(e);
     this.world_to_local(o), this.world_to_local(s);
-    let n = s.x - o.x, r = s.y - o.y, a = s.z - o.z;
-    const i = Math.sqrt(n ** 2 + r ** 2 + a ** 2);
-    n /= i, r /= i, a /= i;
-    let c = 0, h = Math.floor(o.x), l = Math.floor(o.y), u = Math.floor(o.z);
-    const p = n > 0 ? 1 : n == 0 ? 0 : -1, d = r > 0 ? 1 : r == 0 ? 0 : -1, R = a > 0 ? 1 : a == 0 ? 0 : -1, y = Math.abs(1 / n), M = Math.abs(1 / r), x = Math.abs(1 / a), v = p >= 0 ? h + 1 - o.x : o.x - h, V = d >= 0 ? l + 1 - o.y : o.y - l, O = R >= 0 ? u + 1 - o.z : o.z - u;
-    let b = y < 1 / 0 ? y * v : 1 / 0, S = M < 1 / 0 ? M * V : 1 / 0, _ = x < 1 / 0 ? x * O : 1 / 0, g = -1;
-    for (; c <= i; ) {
-      const L = this.getVoxel(h, l, u);
+    let i = s.x - o.x, n = s.y - o.y, r = s.z - o.z;
+    const c = Math.sqrt(i ** 2 + n ** 2 + r ** 2);
+    i /= c, n /= c, r /= c;
+    let a = 0, f = Math.floor(o.x), l = Math.floor(o.y), x = Math.floor(o.z);
+    const u = i > 0 ? 1 : i == 0 ? 0 : -1, p = n > 0 ? 1 : n == 0 ? 0 : -1, S = r > 0 ? 1 : r == 0 ? 0 : -1, _ = Math.abs(1 / i), M = Math.abs(1 / n), h = Math.abs(1 / r), d = u >= 0 ? f + 1 - o.x : o.x - f, y = p >= 0 ? l + 1 - o.y : o.y - l, E = S >= 0 ? x + 1 - o.z : o.z - x;
+    let C = _ < 1 / 0 ? _ * d : 1 / 0, m = M < 1 / 0 ? M * y : 1 / 0, V = h < 1 / 0 ? h * E : 1 / 0, g = -1;
+    for (; a <= c; ) {
+      const L = this.getVoxel(f, l, x);
       if (L) {
-        o.x += c * n, o.y += c * r, o.z += c * a, this.local_to_world(o), s.x = g === 0 ? -p : 0, s.y = g === 1 ? -d : 0, s.z = g === 2 ? -R : 0;
-        const m = I0.set(s.x, s.y, s.z, 0).applyMatrix4(this.matrixWorld);
-        return s.set(m.x, m.y, m.z), {
+        o.x += a * i, o.y += a * n, o.z += a * r, this.local_to_world(o), s.x = g === 0 ? -u : 0, s.y = g === 1 ? -p : 0, s.z = g === 2 ? -S : 0;
+        const O = T0.set(s.x, s.y, s.z, 0).applyMatrix4(this.matrixWorld);
+        return s.set(O.x, O.y, O.z), {
           position: o,
           // _v1
           normal: s,
@@ -935,22 +936,22 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
           // voxCol (= tileId ^ hexCol)
         };
       }
-      b < S ? b < _ ? (h += p, c = b, b += y, g = 0) : (u += R, c = _, _ += x, g = 2) : S < _ ? (l += d, c = S, S += M, g = 1) : (u += R, c = _, _ += x, g = 2);
+      C < m ? C < V ? (f += u, a = C, C += _, g = 0) : (x += S, a = V, V += h, g = 2) : m < V ? (l += p, a = m, m += M, g = 1) : (x += S, a = V, V += h, g = 2);
     }
     return null;
   }
   raycast(t, e) {
     if (!this.voxMap || this.voxMap.size === 0) return;
-    const o = t.ray, s = o.origin, n = o.at(t.camera.far, $), r = this.intersectRay(s, n);
-    if (r) {
-      const a = r.position, i = r.normal, c = r.color, l = o.origin.distanceTo(a);
+    const o = t.ray, s = o.origin, i = o.at(t.camera.far, j), n = this.intersectRay(s, i);
+    if (n) {
+      const r = n.position, c = n.normal, a = n.color, l = o.origin.distanceTo(r);
       e.push({
         distance: l,
-        point: a,
+        point: r,
         // _v1
-        normal: i,
+        normal: c,
         // _v2
-        color: c,
+        color: a,
         object: this
       });
     }
@@ -958,14 +959,14 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   // boundingBox
   getBoundingBox(t = "local") {
     if (t === "local") {
-      let e = 1 / 0, o = 1 / 0, s = 1 / 0, n = -1 / 0, r = -1 / 0, a = -1 / 0;
-      const i = this.voxMap;
-      for (const h of i.keys()) {
-        const [l, u, p] = C.get_xyz(h);
-        e = Math.min(e, l), n = Math.max(n, l), o = Math.min(o, u), r = Math.max(r, u), s = Math.min(s, p), a = Math.max(a, p);
+      let e = 1 / 0, o = 1 / 0, s = 1 / 0, i = -1 / 0, n = -1 / 0, r = -1 / 0;
+      const c = this.voxMap;
+      for (const f of c.keys()) {
+        const [l, x, u] = b.get_xyz(f);
+        e = Math.min(e, l), i = Math.max(i, l), o = Math.min(o, x), n = Math.max(n, x), s = Math.min(s, u), r = Math.max(r, u);
       }
-      const c = new f0();
-      return c.min.set(e, o, s), c.max.set(n, r, a), c;
+      const a = new l0();
+      return a.min.set(e, o, s), a.max.set(i, n, r), a;
     } else {
       const e = this.getBoundingBox("local");
       return this.updateMatrix(), e.applyMatrix4(this.matrix), e;
@@ -974,16 +975,16 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   // boundingSphere
   getBoundingSphere(t = "local") {
     if (t === "local") {
-      const e = this.getBoundingBox("local"), o = new C0(), s = o.center;
+      const e = this.getBoundingBox("local"), o = new E0(), s = o.center;
       e.getCenter(s);
-      let n = 0;
-      const r = this.voxMap;
-      for (const a of r.keys()) {
-        const [i, c, h] = C.get_xyz(a);
+      let i = 0;
+      const n = this.voxMap;
+      for (const r of n.keys()) {
+        const [c, a, f] = b.get_xyz(r);
         let l = 0;
-        l += (i - s.x) ** 2, l += (c - s.y) ** 2, l += (h - s.z) ** 2, n = Math.max(n, l);
+        l += (c - s.x) ** 2, l += (a - s.y) ** 2, l += (f - s.z) ** 2, i = Math.max(i, l);
       }
-      return o.radius = Math.sqrt(n), o;
+      return o.radius = Math.sqrt(i), o;
     } else {
       const e = this.getBoundingSphere("local");
       return this.updateMatrix(), e.applyMatrix4(this.matrix), e;
@@ -995,15 +996,15 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     t.min.multiply(this.scale), t.max.multiply(this.scale), this.position.x = -(t.min.x + t.max.x) / 2, this.position.y = -(t.min.y + t.max.y) / 2, this.position.z = -(t.min.z + t.max.z) / 2, this.updateMatrix();
   }
   rotate(t, e) {
-    t === "x" ? (I.set(1, 0, 0), t = I) : t === "y" ? (I.set(0, 1, 0), t = I) : t === "z" && (I.set(0, 0, 1), t = I), this.applyMatrix4(x0.makeRotationAxis(t, e));
+    t === "x" ? (I.set(1, 0, 0), t = I) : t === "y" ? (I.set(0, 1, 0), t = I) : t === "z" && (I.set(0, 0, 1), t = I), this.applyMatrix4(h0.makeRotationAxis(t, e));
   }
   scaleDown(t) {
     const e = [], o = [], s = this.voxMap;
-    for (const [n, { vc: r }] of s.entries()) {
-      const [a, i, c] = C.get_xyz(n);
-      e.push(a * t, i * t, c * t);
-      const h = C.get_col(r);
-      o.push(h);
+    for (const [i, { vc: n }] of s.entries()) {
+      const [r, c, a] = b.get_xyz(i);
+      e.push(r * t, c * t, a * t);
+      const f = b.get_col(n);
+      o.push(f);
     }
     this.initVoxMap(), this.createFromPositions(e, o), this.center();
   }
@@ -1015,91 +1016,91 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
     return super.copy(t, e), t.options && (this.options = { ...t.options }), this.voxMap = new Map(t.voxMap), this.voxDim = t.voxDim, this.voxType = t.voxType, t.atlas && (this.atlas = { ...t.atlas }), this;
   }
   // create
-  createFromPositions(t, e = null, o = null, s = null, n = null, r = null) {
-    for (let i = 0, c = 0, h = t.length; c < h; c += 3, i++) {
-      const l = t[c], u = t[c + 1], p = t[c + 2], d = e ? e[i] : 16777215, R = o ? o[i] : 0;
-      this.setVoxel(l, u, p, [d, R]);
+  createFromPositions(t, e = null, o = null, s = null, i = null, n = null) {
+    for (let c = 0, a = 0, f = t.length; a < f; a += 3, c++) {
+      const l = t[a], x = t[a + 1], u = t[a + 2], p = e ? e[c] : 16777215, S = o ? o[c] : 0;
+      this.setVoxel(l, x, u, [p, S]);
     }
     this.atlas || (this.atlas = {}), s && (this.atlas.uvScale = [...s]);
-    const a = new l0();
-    if (n != null && n.diffuseMap && (this.atlas.diffuseMap = typeof n.diffuseMap == "string" ? a.load(n.diffuseMap) : n.diffuseMap), n != null && n.normalMap && (this.atlas.normalMap = typeof n.normalMap == "string" ? a.load(n.normalMap) : n.normalMap), this.createVoxelMesh(), r) {
-      const i = this.material;
-      for (let c in r)
-        i[c] !== void 0 && (i[c] = r[c]);
+    const r = new r0();
+    if (i?.diffuseMap && (this.atlas.diffuseMap = typeof i.diffuseMap == "string" ? r.load(i.diffuseMap) : i.diffuseMap), i?.normalMap && (this.atlas.normalMap = typeof i.normalMap == "string" ? r.load(i.normalMap) : i.normalMap), this.createVoxelMesh(), n) {
+      const c = this.material;
+      for (let a in n)
+        c[a] !== void 0 && (c[a] = n[a]);
     }
   }
   // save & load
   async loadVOX(t) {
-    let e = (c) => {
-      const h = c[Symbol.iterator](), l = () => h.next().value, u = () => ({ x: l(), y: l(), z: l(), color: l() }), p = () => ({ r: l(), g: l(), b: l(), a: l() }), d = () => l() + (l() << 8) + (l() << 16) + (l() << 24), R = (_, g) => [...Array(_)].map(g), y = (_) => R(_, () => String.fromCharCode(l())).join(""), M = () => new Map(R(d(), (_) => [y(d()), y(d())])), x = () => ({ id: d(), attrs: M() }), v = () => R(d(), M)[0], V = () => ({ child: d(), layer: d(d()), transfo: v() }), O = () => R(d(), x)[0], b = {
+    let e = (a) => {
+      const f = a[Symbol.iterator](), l = () => f.next().value, x = () => ({ x: l(), y: l(), z: l(), color: l() }), u = () => ({ r: l(), g: l(), b: l(), a: l() }), p = () => l() + (l() << 8) + (l() << 16) + (l() << 24), S = (V, g) => [...Array(V)].map(g), _ = (V) => S(V, () => String.fromCharCode(l())).join(""), M = () => new Map(S(p(), (V) => [_(p()), _(p())])), h = () => ({ id: p(), attrs: M() }), d = () => S(p(), M)[0], y = () => ({ child: p(), layer: p(p()), transfo: d() }), E = () => S(p(), h)[0], C = {
         MAIN: () => {
         },
         // only children chunks
-        PACK: () => ({ nbModels: d() }),
-        SIZE: () => ({ x: d(), y: d(), z: d() }),
-        XYZI: () => ({ voxels: R(d(), u) }),
-        RGBA: () => ({ palette: [{}, ...R(256, p)] }),
+        PACK: () => ({ nbModels: p() }),
+        SIZE: () => ({ x: p(), y: p(), z: p() }),
+        XYZI: () => ({ voxels: S(p(), x) }),
+        RGBA: () => ({ palette: [{}, ...S(256, u)] }),
         // color 0 reserved ?
         // extensions
-        nTRN: () => ({ ...x(), ...V() }),
-        nGRP: () => ({ ...x(), ids: R(d(), d) }),
-        nSHP: () => ({ ...x(), model: O() }),
-        MATL: () => ({ ...x() }),
-        LAYR: () => ({ ...x(), reserved: d() }),
+        nTRN: () => ({ ...h(), ...y() }),
+        nGRP: () => ({ ...h(), ids: S(p(), p) }),
+        nSHP: () => ({ ...h(), model: E() }),
+        MATL: () => ({ ...h() }),
+        LAYR: () => ({ ...h(), reserved: p() }),
         rOBJ: () => ({ attrs: M() })
         // not documented: background, grid, fog, etc.
-      }, S = () => {
-        const [_, g, L] = [y(4), d(), d()], m = 12 + g + L, E = b[_], w = E ? E() : { data: y(g) }, T = function* (z) {
+      }, m = () => {
+        const [V, g, L] = [_(4), p(), p()], O = 12 + g + L, R = C[V], w = R ? R() : { data: _(g) }, T = function* (z) {
           for (; z > 0; ) {
-            const { chunk: A, length: N } = S();
+            const { chunk: A, length: N } = m();
             yield A, z -= N;
           }
-        }, U = { type: _, ...w };
-        return L && (U.children = [...T(L)]), { chunk: U, length: m };
+        }, U = { type: V, ...w };
+        return L && (U.children = [...T(L)]), { chunk: U, length: O };
       };
-      return y(4), d(), S().chunk;
-    }, o = (c) => {
-      const { children: h } = e(c), l = h.reduce((z, A) => {
+      return _(4), p(), m().chunk;
+    }, o = (a) => {
+      const { children: f } = e(a), l = f.reduce((z, A) => {
         const { type: N } = A;
         return (z[N] = z[N] || []).push(A), z;
-      }, {}), { x: u, y: p, z: d } = h[0], R = { x: u, y: p, z: d }, { palette: y } = l.RGBA[0], M = /* @__PURE__ */ new Map(), x = /* @__PURE__ */ new Map(), v = /* @__PURE__ */ new Map();
-      let V = 0;
-      const O = (z, A, N) => (1 << 24 | N << 16 | A << 8 | z).toString(16).slice(1);
-      y.slice(0).forEach(({ r: z, g: A, b: N, a: k }, W) => {
-        const K = O(z, A, N);
-        x.has(K) || (x.set(K, [z, A, N]), M.set(++V, K)), v.set(W, V);
+      }, {}), { x, y: u, z: p } = f[0], S = { x, y: u, z: p }, { palette: _ } = l.RGBA[0], M = /* @__PURE__ */ new Map(), h = /* @__PURE__ */ new Map(), d = /* @__PURE__ */ new Map();
+      let y = 0;
+      const E = (z, A, N) => (1 << 24 | N << 16 | A << 8 | z).toString(16).slice(1);
+      _.slice(0).forEach(({ r: z, g: A, b: N, a: k }, W) => {
+        const K = E(z, A, N);
+        h.has(K) || (h.set(K, [z, A, N]), M.set(++y, K)), d.set(W, y);
       });
-      const b = /* @__PURE__ */ new Map(), S = (z) => {
+      const C = /* @__PURE__ */ new Map(), m = (z) => {
         const A = [], N = /* @__PURE__ */ new Map();
-        return z.forEach(({ x: k, y: W, z: K, color: _0 }) => {
-          const q = v.get(_0), J = M.get(q);
-          N.set(q, J), b.set(J, x.get(J)), A.push([k, W, K, q]);
-        }), { size: R, voxels: A, colorMap: N };
-      }, _ = new Map(
-        l.XYZI.map(({ voxels: z }, A) => [A, S(z)])
-      ), g = (z) => ({ models: _, colors: b, root: z });
+        return z.forEach(({ x: k, y: W, z: K, color: d0 }) => {
+          const Z = d.get(d0), q = M.get(Z);
+          N.set(Z, q), C.set(q, h.get(q)), A.push([k, W, K, Z]);
+        }), { size: S, voxels: A, colorMap: N };
+      }, V = new Map(
+        l.XYZI.map(({ voxels: z }, A) => [A, m(z)])
+      ), g = (z) => ({ models: V, colors: C, root: z });
       if (!l.nTRN) return g({ translation: [0, 0, 0], model: 0 });
-      const L = (z) => new Map(z.map((A) => [A.id, A])), m = L(l.nTRN), E = L(l.nGRP), w = L(l.nSHP), T = (z) => z.split(" ").map((A) => +A), U = ({ child: z, transfo: A }) => {
-        const N = E.get(z) || w.get(z), k = { translation: T(A.get("_t") || "0 0 0") };
-        return N.model ? k.model = N.model.id : k.children = N.ids.map((W) => U(m.get(W))), k;
+      const L = (z) => new Map(z.map((A) => [A.id, A])), O = L(l.nTRN), R = L(l.nGRP), w = L(l.nSHP), T = (z) => z.split(" ").map((A) => +A), U = ({ child: z, transfo: A }) => {
+        const N = R.get(z) || w.get(z), k = { translation: T(A.get("_t") || "0 0 0") };
+        return N.model ? k.model = N.model.id : k.children = N.ids.map((W) => U(O.get(W))), k;
       };
-      return g(U(m.get(0)));
+      return g(U(O.get(0)));
     };
-    const s = await fetch(t), n = new Uint8Array(await s.arrayBuffer()), r = o(n), a = r.colors;
-    r.models.forEach((c, h, l) => {
-      let u = [];
-      c.colorMap.forEach((p, d) => {
-        u[d] = parseInt("0xff" + p, 16);
-      }), c.voxels.forEach((p) => {
-        let d = u[p[3]].toString(16).slice(2), R = a.get(d).map((M) => M / 255);
-        R = R.map((M) => N0(M));
-        let y = this.rgbToHex(...R);
-        this.setVoxel(p[0], p[2], -p[1], [y, 0]);
+    const s = await fetch(t), i = new Uint8Array(await s.arrayBuffer()), n = o(i), r = n.colors;
+    n.models.forEach((a, f, l) => {
+      let x = [];
+      a.colorMap.forEach((u, p) => {
+        x[p] = parseInt("0xff" + u, 16);
+      }), a.voxels.forEach((u) => {
+        let p = x[u[3]].toString(16).slice(2), S = r.get(p).map((M) => M / 255);
+        S = S.map((M) => z0(M));
+        let _ = this.rgbToHex(...S);
+        this.setVoxel(u[0], u[2], -u[1], [_, 0]);
       });
     }), this.createVoxelMesh(), this.center();
   }
   saveVOX(t = "model.vox") {
-    new D0().save(this, t);
+    new b0().save(this, t);
   }
   // saveGLB( filename = 'voxelMesh.glb' )
   // {
@@ -1126,72 +1127,70 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   // }
   // simulation (XPBD)
   getTrimesh() {
-    var e;
-    const t = (e = this.geometry.attributes.aVoxData) == null ? void 0 : e.array;
+    const t = this.geometry.attributes.aVoxData?.array;
     if (t) {
-      const o = [], s = [], n = [];
-      let r = 0;
-      const a = new Array(8), i = new Array(8), c = /* @__PURE__ */ new Map(), h = this.voxDim, l = this.position.x, u = this.position.y, p = this.position.z, d = this.scale.x, R = this.scale.y, y = this.scale.z;
-      for (let M = 0, x = t.length; M < x; M += h) {
-        const [v, V, O] = C.get_xyz(t[M]), b = C.get_col(t[M + 1]);
-        i[0] = [v, V + 1, O], i[1] = [v, V, O], i[2] = [v, V + 1, O + 1], i[3] = [v, V, O + 1], i[4] = [v + 1, V + 1, O + 1], i[5] = [v + 1, V, O + 1], i[6] = [v + 1, V + 1, O], i[7] = [v + 1, V, O];
-        for (let _ = 0; _ < 8; _++) {
-          const g = C.get_vp(...i[_]), L = c.get(g);
-          L === void 0 ? (c.set(g, r), a[_] = r++, o.push(
-            l + d * i[_][0],
-            u + R * i[_][1],
-            p + y * i[_][2]
-          ), s.push(
-            (b >> 16 & 255) / 255,
-            (b >> 8 & 255) / 255,
-            (b & 255) / 255
-          )) : a[_] = L;
+      const e = [], o = [], s = [];
+      let i = 0;
+      const n = new Array(8), r = new Array(8), c = /* @__PURE__ */ new Map(), a = this.voxDim, f = this.position.x, l = this.position.y, x = this.position.z, u = this.scale.x, p = this.scale.y, S = this.scale.z;
+      for (let _ = 0, M = t.length; _ < M; _ += a) {
+        const [h, d, y] = b.get_xyz(t[_]), E = b.get_col(t[_ + 1]);
+        r[0] = [h, d + 1, y], r[1] = [h, d, y], r[2] = [h, d + 1, y + 1], r[3] = [h, d, y + 1], r[4] = [h + 1, d + 1, y + 1], r[5] = [h + 1, d, y + 1], r[6] = [h + 1, d + 1, y], r[7] = [h + 1, d, y];
+        for (let m = 0; m < 8; m++) {
+          const V = b.get_vp(...r[m]), g = c.get(V);
+          g === void 0 ? (c.set(V, i), n[m] = i++, e.push(
+            f + u * r[m][0],
+            l + p * r[m][1],
+            x + S * r[m][2]
+          ), o.push(
+            (E >> 16 & 255) / 255,
+            (E >> 8 & 255) / 255,
+            (E & 255) / 255
+          )) : n[m] = g;
         }
-        const S = [
-          [a[1], a[2], a[6], a[0]],
-          [a[1], a[5], a[2], a[3]],
-          [a[2], a[5], a[6], a[4]],
-          [a[1], a[6], a[5], a[7]]
+        const C = [
+          [n[1], n[2], n[6], n[0]],
+          [n[1], n[5], n[2], n[3]],
+          [n[2], n[5], n[6], n[4]],
+          [n[1], n[6], n[5], n[7]]
         ];
-        for (let _ = 0; _ < 4; _++) {
-          const [g, L, m, E] = S[_];
-          n.push(g, L, E, L, m, E, m, g, E);
+        for (let m = 0; m < 4; m++) {
+          const [V, g, L, O] = C[m];
+          s.push(V, g, O, g, L, O, L, V, O);
         }
       }
-      return { verts: o, triIds: n, cols: s };
+      return { verts: e, triIds: s, cols: o };
     }
     return null;
   }
   getTetrahedra() {
-    var e;
-    const t = (e = this.geometry.attributes.aVoxData) == null ? void 0 : e.array;
+    const t = this.geometry.attributes.aVoxData?.array;
     if (t) {
-      const o = [], s = [], n = [];
-      let r = 0;
-      const a = new Array(8), i = new Array(8), c = /* @__PURE__ */ new Map(), h = this.voxDim, l = this.position.x, u = this.position.y, p = this.position.z, d = this.scale.x, R = this.scale.y, y = this.scale.z;
-      for (let M = 0, x = t.length; M < x; M += h) {
-        const [v, V, O] = C.get_xyz(t[M]);
-        i[0] = [v, V + 1, O], i[1] = [v, V, O], i[2] = [v, V + 1, O + 1], i[3] = [v, V, O + 1], i[4] = [v + 1, V + 1, O + 1], i[5] = [v + 1, V, O + 1], i[6] = [v + 1, V + 1, O], i[7] = [v + 1, V, O];
-        for (let S = 0; S < 8; S++) {
-          const _ = C.get_vp(...i[S]), g = c.get(_);
-          g === void 0 ? (c.set(_, r), a[S] = r++, o.push(
-            l + d * i[S][0],
-            u + R * i[S][1],
-            p + y * i[S][2]
-          )) : a[S] = g;
+      const e = [], o = [], s = [];
+      let i = 0;
+      const n = new Array(8), r = new Array(8), c = /* @__PURE__ */ new Map(), a = this.voxDim, f = this.position.x, l = this.position.y, x = this.position.z, u = this.scale.x, p = this.scale.y, S = this.scale.z;
+      for (let _ = 0, M = t.length; _ < M; _ += a) {
+        const [h, d, y] = b.get_xyz(t[_]);
+        r[0] = [h, d + 1, y], r[1] = [h, d, y], r[2] = [h, d + 1, y + 1], r[3] = [h, d, y + 1], r[4] = [h + 1, d + 1, y + 1], r[5] = [h + 1, d, y + 1], r[6] = [h + 1, d + 1, y], r[7] = [h + 1, d, y];
+        for (let C = 0; C < 8; C++) {
+          const m = b.get_vp(...r[C]), V = c.get(m);
+          V === void 0 ? (c.set(m, i), n[C] = i++, e.push(
+            f + u * r[C][0],
+            l + p * r[C][1],
+            x + S * r[C][2]
+          )) : n[C] = V;
         }
-        const b = [
-          [a[1], a[2], a[6], a[0]],
-          [a[1], a[5], a[2], a[3]],
-          [a[2], a[5], a[6], a[4]],
-          [a[1], a[6], a[5], a[7]]
+        const E = [
+          [n[1], n[2], n[6], n[0]],
+          [n[1], n[5], n[2], n[3]],
+          [n[2], n[5], n[6], n[4]],
+          [n[1], n[6], n[5], n[7]]
         ];
-        for (let S = 0; S < 4; S++) {
-          const [_, g, L, m] = b[S];
-          s.push(_, g, L, m), n.push(m, _, m, g, m, L, _, g, g, L, L, _);
+        for (let C = 0; C < 4; C++) {
+          const [m, V, g, L] = E[C];
+          o.push(m, V, g, L), s.push(L, m, L, V, L, g, m, V, V, g, g, m);
         }
       }
-      return { verts: o, tetIds: s, edgeIds: n };
+      return { verts: e, tetIds: o, edgeIds: s };
     }
     return null;
   }
@@ -1209,81 +1208,76 @@ const e0 = 65536, o0 = 256, s0 = 1, n0 = [
   // event
   setupEventListeners() {
     const t = this;
-    t.isShiftDown = !1, document.addEventListener("pointermove", e), document.addEventListener("pointerdown", o), window.addEventListener("keydown", s, !0), window.addEventListener("keyup", n, !0);
-    function e(r) {
-      const a = this.threefy, i = a.camera, c = a.raycaster, h = a.mouseMovePosition, l = [];
-      if (c.setFromCamera(h, i), t.raycast(c, l), l.length > 0) {
-        const { point: u, normal: p } = l[0];
-        t.__drawXVoxel(u, p);
+    t.isShiftDown = !1, document.addEventListener("pointermove", e), document.addEventListener("pointerdown", o), window.addEventListener("keydown", s, !0), window.addEventListener("keyup", i, !0);
+    function e(n) {
+      const r = this.threefy, c = r.camera, a = r.raycaster, f = r.mouseMovePosition, l = [];
+      if (a.setFromCamera(f, c), t.raycast(a, l), l.length > 0) {
+        const { point: x, normal: u } = l[0];
+        t.__drawXVoxel(x, u);
       }
     }
-    function o(r) {
-      const a = this.threefy, i = a.camera, c = a.raycaster, h = a.mouseMovePosition, l = [];
-      if (c.setFromCamera(h, i), t.raycast(c, l), l.length > 0) {
-        const { point: u, normal: p } = l[0];
-        t.isShiftDown ? t.__deleteVoxel(u, p) : t.__addVoxel(u, p);
+    function o(n) {
+      const r = this.threefy, c = r.camera, a = r.raycaster, f = r.mouseMovePosition, l = [];
+      if (a.setFromCamera(f, c), t.raycast(a, l), l.length > 0) {
+        const { point: x, normal: u } = l[0];
+        t.isShiftDown ? t.__deleteVoxel(x, u) : t.__addVoxel(x, u);
       }
     }
-    function s(r) {
-      switch (r.keyCode) {
+    function s(n) {
+      switch (n.keyCode) {
         case 16:
           t.isShiftDown = !0;
           break;
       }
     }
-    function n(r) {
-      switch (r.keyCode) {
+    function i(n) {
+      switch (n.keyCode) {
         case 16:
           t.isShiftDown = !1;
           break;
       }
     }
   }
-};
-// offsets of voxels connected to 6 faces
-j(C, "Faces", ["nzz", "pzz", "znz", "zpz", "zzn", "zzp"]), // offsets of voxels connected to 12 edges
-j(C, "Edges", ["znn", "zpn", "znp", "zpp", "nzn", "nzp", "pzn", "pzp", "nnz", "pnz", "npz", "ppz"]), // offsets of voxels connected to 8 vertices
-j(C, "Vertices", ["nnn", "pnn", "npn", "ppn", "nnp", "pnp", "npp", "ppp"]);
-let i0 = C;
-const Z = new p0(), a0 = (f, t = 0, e = 1) => Math.max(t, Math.min(e, f)), B0 = (f, t, e) => e <= f ? 0 : e >= t ? 1 : (e = (e - f) / (t - f), e * e * (3 - 2 * e)), u0 = (f, t) => f + Math.random() * (t - f), U0 = (f) => {
+}
+const Y = new x0(), n0 = (v, t = 0, e = 1) => Math.max(t, Math.min(e, v)), A0 = (v, t, e) => e <= v ? 0 : e >= t ? 1 : (e = (e - v) / (t - v), e * e * (3 - 2 * e)), f0 = (v, t) => v + Math.random() * (t - v), D0 = (v) => {
   let t;
   do
-    Z.x = u0(-f, f), Z.y = u0(-f, f), t = Z.length();
-  while (t > f);
-  return Z;
-}, j0 = (f) => {
-  const t = document.createElement("canvas"), e = t.getContext("2d"), o = f.image;
+    Y.x = f0(-v, v), Y.y = f0(-v, v), t = Y.length();
+  while (t > v);
+  return Y;
+}, k0 = (v) => {
+  const t = document.createElement("canvas"), e = t.getContext("2d"), o = v.image;
   t.width = o.width, t.height = o.height, e.drawImage(o, 0, 0);
-  const n = e.getImageData(0, 0, o.width, o.height).data, r = new Float32Array(o.width * o.height);
-  for (let a = 0, i = 0, c = n.length; i < c; i += 4)
-    r[a++] = (n[i] + n[i + 1] + n[i + 2]) / 3;
-  return { elevations: r, width: o.width, height: o.height };
+  const i = e.getImageData(0, 0, o.width, o.height).data, n = new Float32Array(o.width * o.height);
+  for (let r = 0, c = 0, a = i.length; c < a; c += 4)
+    n[r++] = (i[c] + i[c + 1] + i[c + 2]) / 3;
+  return { elevations: n, width: o.width, height: o.height };
 };
 class D {
   constructor(t = {}) {
     const e = {};
-    e.octaves = t.octaves || 1, e.scale = t.scale || 256, e.persistence = t.persistence || 0.5, e.lacunarity = t.lacunarity || 2, e.exponentiation = t.exponentiation || 1, e.height = t.height || 1, e.range = t.range || [0, 1], e.ridged = t.ridged || !1, this.parameters = e, this.snoise = new b0();
+    e.octaves = t.octaves || 1, e.scale = t.scale || 256, e.persistence = t.persistence || 0.5, e.lacunarity = t.lacunarity || 2, e.exponentiation = t.exponentiation || 1, e.height = t.height || 1, e.range = t.range || [0, 1], e.ridged = t.ridged || !1, this.parameters = e, this.snoise = new L0();
   }
   get(t, e, o) {
-    const s = this.parameters, n = 2 ** -s.persistence, r = t / s.scale, a = e / s.scale, i = o / s.scale, c = this.snoise;
-    let h = 1, l = 1, u = 0, p = 0;
-    for (let d = 0; d < s.octaves; d++) {
-      let R = c.noise3d(r * l, a * l, i * l);
-      p += R * h, u += h, h *= n, l *= s.lacunarity;
+    const s = this.parameters, i = 2 ** -s.persistence, n = t / s.scale, r = e / s.scale, c = o / s.scale, a = this.snoise;
+    let f = 1, l = 1, x = 0, u = 0;
+    for (let p = 0; p < s.octaves; p++) {
+      let S = a.noise3d(n * l, r * l, c * l);
+      u += S * f, x += f, f *= i, l *= s.lacunarity;
     }
-    if (p /= u, p = s.ridged ? 1 - Math.abs(p) : p * 0.5 + 0.5, p = Math.pow(p, s.exponentiation), s.range) {
-      const d = s.range;
-      p = d[0] + (d[1] - d[0]) * p;
+    if (u /= x, u = s.ridged ? 1 - Math.abs(u) : u * 0.5 + 0.5, u = Math.pow(u, s.exponentiation), s.range) {
+      const p = s.range;
+      u = p[0] + (p[1] - p[0]) * u;
     }
-    return p * s.height;
+    return u * s.height;
   }
 }
-class X0 {
+class N0 {
   constructor(t = 128) {
     this.maxHeight = t, this.WATER_LEVEL = t * 0.1, this.SAND_LEVEL = t * 0.15, this.GRASS_LEVEL = t * 0.5, this.SNOW_LEVEL = t * 0.9, this.WATER_HEXCOL = 8421631, this.SAND_HEXCOL = 16777088, this.GRASS_HEXCOL = 4259648, this.DIRT_HEXCOL = 7299681, this.SNOW_HEXCOL = 16777215, this.STONE_HEXCOL = 4210752, this.HILLS_HEXCOL = 4259648, this.TRUNK_HEXCOL = 7881772, this.LEAF_HEXCOL = 2463422, this.MOON_HEXCOL = 16054e3, this.WATER_COLOR = [this.WATER_HEXCOL], this.SAND_COLOR = [this.SAND_HEXCOL], this.GRASS_COLOR = [this.GRASS_HEXCOL], this.DIRT_COLOR = [this.DIRT_HEXCOL], this.SNOW_COLOR = [this.SNOW_HEXCOL], this.STONE_COLOR = [this.STONE_HEXCOL], this.HILLS_COLOR = [this.HILLS_HEXCOL], this.TRUNK_COLOR = [this.TRUNK_HEXCOL], this.LEAF_COLOR = [this.LEAF_HEXCOL], this.MOON_COLOR = [this.MOON_HEXCOL];
   }
 }
-class H0 {
+class I0 {
   constructor(t) {
     this.terrainDB = t, this.elevation = new D({
       octaves: 6,
@@ -1310,7 +1304,7 @@ class H0 {
     return [o, this.biomeColor(o, s)];
   }
 }
-class P0 {
+class B0 {
   constructor(t) {
     this.terrainDB = t, this.mountain1 = new D({
       octaves: 3,
@@ -1337,11 +1331,11 @@ class P0 {
   }
   get(t, e) {
     let o = this.mountain1.get(t, 3, e), s = this.mountain2.get(t, 11, e);
-    const n = this.roll.get(t, 13, e) * 0.8 + 0.2, r = B.lerp(o, s, n), a = this.roll.get(t, 17, e) * 0.2 + 0.8, i = B.lerp(0, r, a), c = this.roll.get(t, 7, e) * 0.4 + 0.6;
-    return [i, this.biomeColor(i, null, c)];
+    const i = this.roll.get(t, 13, e) * 0.8 + 0.2, n = B.lerp(o, s, i), r = this.roll.get(t, 17, e) * 0.2 + 0.8, c = B.lerp(0, n, r), a = this.roll.get(t, 7, e) * 0.4 + 0.6;
+    return [c, this.biomeColor(c, null, a)];
   }
 }
-class d0 {
+class u0 {
   constructor(t) {
     this.terrainDB = t, this.terrain = new D({
       octaves: 6,
@@ -1363,11 +1357,11 @@ class d0 {
     });
   }
   get(t, e) {
-    const o = this.terrain.get(t, 0, e) * this.height.get(t, 0, e), s = this.terrainDB, r = this.roll.get(t, 0, e) > o / 32 ? s.DIRT_COLOR : s.STONE_COLOR;
-    return [o, r];
+    const o = this.terrain.get(t, 0, e) * this.height.get(t, 0, e), s = this.terrainDB, n = this.roll.get(t, 0, e) > o / 32 ? s.DIRT_COLOR : s.STONE_COLOR;
+    return [o, n];
   }
 }
-class k0 {
+class U0 {
   constructor(t) {
     this.terrainDB = t, this.ground = new D({
       octaves: 4,
@@ -1387,7 +1381,7 @@ class k0 {
     return [this.height.get(t + o, 0, e + s), this.terrainDB.SAND_COLOR];
   }
 }
-class r0 {
+class i0 {
   constructor(t) {
     this.terrainDB = t, this.smHeight = new D({
       octaves: 5,
@@ -1425,14 +1419,14 @@ class r0 {
     const o = this.lgHeight.get(t, 0, e);
     let s = o * this.smHeight.get(t, 0, e) + 10;
     if (this.plateaus.get(t, 0, e) > 0.25) {
-      const r = Math.round(10 + this.plateausNum.get(t, 0, e)), a = Math.round(o / r);
-      s = Math.round(s / a) * a;
+      const n = Math.round(10 + this.plateausNum.get(t, 0, e)), r = Math.round(o / n);
+      s = Math.round(s / r) * r;
     }
-    const n = this.moisture.get(t, 0, e);
-    return [s, this.biomeColor(s, n)];
+    const i = this.moisture.get(t, 0, e);
+    return [s, this.biomeColor(s, i)];
   }
 }
-class v0 {
+class p0 {
   constructor(t, e = [0, 0]) {
     this.terrainDB = t, this.offset = e, this.moon = new D({
       octaves: 5,
@@ -1449,29 +1443,29 @@ class v0 {
   initCraters() {
     for (let e = -128; e <= 128; e += 8)
       for (let o = -128; o <= 128; o += 8) {
-        const s = e + this.offset[0], n = o + this.offset[1];
-        if (this.crater.get(s, 0, n) > 0.95) {
-          const a = Math.min(this.crater.get(s, 1, n) ** 4 * 100, 50) + 4;
-          this.craters.push([new F(s, 0, n), a]);
+        const s = e + this.offset[0], i = o + this.offset[1];
+        if (this.crater.get(s, 0, i) > 0.95) {
+          const r = Math.min(this.crater.get(s, 1, i) ** 4 * 100, 50) + 4;
+          this.craters.push([new F(s, 0, i), r]);
         }
       }
   }
   get(t, e) {
-    const o = this.moon.get(t, e, 10), s = this.moon.get(t, e, 20), n = Math.round(this.moon.get(t + o, e + s, 0) * 64), r = this._v1;
-    let a = n;
-    for (let i = 0; i < this.craters.length; ++i) {
-      const c = r.set(t, 0, e), [h, l] = this.craters[i], u = h.distanceTo(c), p = l;
-      if (u < p * 2) {
-        const d = l / 4, R = Math.abs(u - (p - d)), M = 1 - a0(R / d) ** 0.5, x = l / 10, v = 1 - a0((u - (p - d * 2)) / d) ** 2;
-        a += M * x + v * -(x * 2);
+    const o = this.moon.get(t, e, 10), s = this.moon.get(t, e, 20), i = Math.round(this.moon.get(t + o, e + s, 0) * 64), n = this._v1;
+    let r = i;
+    for (let c = 0; c < this.craters.length; ++c) {
+      const a = n.set(t, 0, e), [f, l] = this.craters[c], x = f.distanceTo(a), u = l;
+      if (x < u * 2) {
+        const p = l / 4, S = Math.abs(x - (u - p)), M = 1 - n0(S / p) ** 0.5, h = l / 10, d = 1 - n0((x - (u - p * 2)) / p) ** 2;
+        r += M * h + d * -(h * 2);
       }
     }
-    return [a, this.terrainDB.MOON_COLOR];
+    return [r, this.terrainDB.MOON_COLOR];
   }
 }
-class G0 {
+class X0 {
   constructor(t) {
-    this.terrainDB = t, this.moon = new v0(t), this.grass = new r0(t), this.sand = new r0(t), this.rocky = new d0(t), this.biomeType = new D({
+    this.terrainDB = t, this.moon = new p0(t), this.grass = new i0(t), this.sand = new i0(t), this.rocky = new u0(t), this.biomeType = new D({
       octaves: 1,
       scale: 1,
       exponentiation: 1,
@@ -1484,32 +1478,32 @@ class G0 {
     });
   }
   get(t, e) {
-    const o = this.terrainDB, s = 128, n = [Math.floor(t / s), Math.floor(e / s)], r = [n[0] * s, n[1] * s], a = [
-      r[0] + s * 0.5,
-      r[1] + s * 0.5
-    ], i = ((t - a[0]) ** 2 + (e - a[1]) ** 2) ** 0.5, c = a0((i - s * 0.25) / (s * 0.25)), h = Math.round(this.biomeType.get(n[0], 0, n[1]));
+    const o = this.terrainDB, s = 128, i = [Math.floor(t / s), Math.floor(e / s)], n = [i[0] * s, i[1] * s], r = [
+      n[0] + s * 0.5,
+      n[1] + s * 0.5
+    ], c = ((t - r[0]) ** 2 + (e - r[1]) ** 2) ** 0.5, a = n0((c - s * 0.25) / (s * 0.25)), f = Math.round(this.biomeType.get(i[0], 0, i[1]));
     let l = null;
-    return h == 0 ? l = this.rocky.get(t, e) : h == 1 ? l = this.sand.get(t, e) : h == 2 ? l = this.grass.get(t, e) : h == 3 ? l = [15, o.SNOW_COLOR] : h == 4 && (l = this.moon.get(t, e)), l[0] = B.lerp(l[0], 0, B0(0, 1, c)), l;
+    return f == 0 ? l = this.rocky.get(t, e) : f == 1 ? l = this.sand.get(t, e) : f == 2 ? l = this.grass.get(t, e) : f == 3 ? l = [15, o.SNOW_COLOR] : f == 4 && (l = this.moon.get(t, e)), l[0] = B.lerp(l[0], 0, A0(0, 1, a)), l;
   }
 }
-const $0 = (f) => {
-  function t(y, M, x, v) {
-    const V = M, [O, b] = h.get(x, v), S = V.TRUNK_COLOR, _ = V.LEAF_COLOR, g = B.randInt(3, 5);
-    for (let E = 0; E < g; E++)
-      y.setVoxel(x, O + E, v, S);
+const G0 = (v) => {
+  function t(_, M, h, d) {
+    const y = M, [E, C] = f.get(h, d), m = y.TRUNK_COLOR, V = y.LEAF_COLOR, g = B.randInt(3, 5);
+    for (let R = 0; R < g; R++)
+      _.setVoxel(h, E + R, d, m);
     const L = 2;
-    for (let E = 0; E < L; E++)
+    for (let R = 0; R < L; R++)
       for (let w = -2; w <= 2; w++)
         for (let T = -2; T <= 2; T++)
-          Math.abs(T) == 2 && Math.abs(w) == 2 || y.setVoxel(x + T, O + g + E, v + w, _);
-    const m = 2;
-    for (let E = 0; E < m; E++)
+          Math.abs(T) == 2 && Math.abs(w) == 2 || _.setVoxel(h + T, E + g + R, d + w, V);
+    const O = 2;
+    for (let R = 0; R < O; R++)
       for (let w = -1; w <= 1; w++)
         for (let T = -1; T <= 1; T++)
-          Math.abs(T) == 1 && Math.abs(w) == 1 || y.setVoxel(x + T, O + g + L + E, v + w, _);
+          Math.abs(T) == 1 && Math.abs(w) == 1 || _.setVoxel(h + T, E + g + L + R, d + w, V);
   }
-  function e(y, M, x, v) {
-    const V = M, [O, b] = h.get(x, v), S = B.randInt(6, 10), _ = B.randInt(3, 5), g = [
+  function e(_, M, h, d) {
+    const y = M, [E, C] = f.get(h, d), m = B.randInt(6, 10), V = B.randInt(3, 5), g = [
       [0, -1],
       [0, 1],
       [-1, -1],
@@ -1519,84 +1513,84 @@ const $0 = (f) => {
       [1, 0],
       [1, 1]
     ];
-    for (let L = 0; L < S; L++)
-      L < _ ? y.setVoxel(x, O + L, v, V.TRUNK_COLOR) : (y.setVoxel(x, O + L, v, V.LEAF_COLOR), g.forEach((m) => {
-        Math.random() > 0.5 || y.setVoxel(x + m[0], O + L, v + m[1], V.LEAF_COLOR);
+    for (let L = 0; L < m; L++)
+      L < V ? _.setVoxel(h, E + L, d, y.TRUNK_COLOR) : (_.setVoxel(h, E + L, d, y.LEAF_COLOR), g.forEach((O) => {
+        Math.random() > 0.5 || _.setVoxel(h + O[0], E + L, d + O[1], y.LEAF_COLOR);
       }));
   }
-  function o(y, M, x, v) {
-    const V = M, [O, b] = h.get(x, v), S = B.randInt(6, 9), _ = O + S, g = B.randInt(2, 4), L = (m, E, w, T) => m * m + E * E + w * w <= T * T;
-    for (let m = 0; m < S; m++)
-      y.setVoxel(x, O + m, v, V.TRUNK_COLOR);
-    for (let m = -g; m <= g; m++)
-      for (let E = -g; E <= g; E++)
+  function o(_, M, h, d) {
+    const y = M, [E, C] = f.get(h, d), m = B.randInt(6, 9), V = E + m, g = B.randInt(2, 4), L = (O, R, w, T) => O * O + R * R + w * w <= T * T;
+    for (let O = 0; O < m; O++)
+      _.setVoxel(h, E + O, d, y.TRUNK_COLOR);
+    for (let O = -g; O <= g; O++)
+      for (let R = -g; R <= g; R++)
         for (let w = -g; w <= g; w++)
-          L(m, E, w, g) && y.setVoxel(x + m, _ + E, v + w, V.LEAF_COLOR);
+          L(O, R, w, g) && _.setVoxel(h + O, V + R, d + w, y.LEAF_COLOR);
   }
-  function s(y, M, x, v) {
-    const V = M, [O, b] = h.get(x, v), S = B.randInt(6, 9), _ = O + S, g = B.randInt(5, 8), L = B.randInt(2, 6);
-    for (let m = 0; m < S; m++)
-      y.setVoxel(x, O + m, v, V.TRUNK_COLOR), m % 2 === 0 ? (y.setVoxel(x - 1, O + m, v, V.TRUNK_COLOR), y.setVoxel(x + 1, O + m, v, V.TRUNK_COLOR)) : (y.setVoxel(x, O + m, v - 1, V.TRUNK_COLOR), y.setVoxel(x, O + m, v + 1, V.TRUNK_COLOR));
-    for (let m = 0; m < g; m++) {
-      y.setVoxel(x, _ + m, v, V.LEAF_COLOR);
-      for (let E = 0; E < 16; E++) {
-        const w = U0(L);
-        y.setVoxel(x + w.x, _ + m, v + w.y, V.LEAF_COLOR);
+  function s(_, M, h, d) {
+    const y = M, [E, C] = f.get(h, d), m = B.randInt(6, 9), V = E + m, g = B.randInt(5, 8), L = B.randInt(2, 6);
+    for (let O = 0; O < m; O++)
+      _.setVoxel(h, E + O, d, y.TRUNK_COLOR), O % 2 === 0 ? (_.setVoxel(h - 1, E + O, d, y.TRUNK_COLOR), _.setVoxel(h + 1, E + O, d, y.TRUNK_COLOR)) : (_.setVoxel(h, E + O, d - 1, y.TRUNK_COLOR), _.setVoxel(h, E + O, d + 1, y.TRUNK_COLOR));
+    for (let O = 0; O < g; O++) {
+      _.setVoxel(h, V + O, d, y.LEAF_COLOR);
+      for (let R = 0; R < 16; R++) {
+        const w = D0(L);
+        _.setVoxel(h + w.x, V + O, d + w.y, y.LEAF_COLOR);
       }
     }
   }
-  function n(y, M, x, v) {
+  function i(_, M, h, d) {
     switch (B.randInt(1, 4)) {
       case 1:
-        t(y, M, x, v);
+        t(_, M, h, d);
         break;
       case 2:
-        e(y, M, x, v);
+        e(_, M, h, d);
         break;
       case 3:
-        o(y, M, x, v);
+        o(_, M, h, d);
         break;
       case 4:
-        s(y, M, x, v);
+        s(_, M, h, d);
         break;
     }
   }
-  const { selectTerrain: r, radius: a, atlas: i } = f, c = new X0();
-  i && (c.WATER_COLOR.push(0), c.SAND_COLOR.push(1), c.GRASS_COLOR.push(2), c.DIRT_COLOR.push(3), c.SNOW_COLOR.push(4), c.STONE_COLOR.push(5), c.HILLS_COLOR.push(6), c.TRUNK_COLOR.push(7), c.LEAF_COLOR.push(8), c.MOON_COLOR.push(9));
-  const h = r === 0 ? new H0(c) : r === 1 ? new P0(c) : r === 2 ? new d0(c) : r === 3 ? new k0(c) : r === 4 ? new r0(c) : r === 5 ? new v0(c) : r === 6 ? new G0(c) : null, l = [], u = c, p = 256, d = 256, R = a;
-  for (let y = -R; y < R; y++)
-    for (let M = -R; M < R; M++) {
-      const x = new i0();
-      i && x.setAtlasTexture(i);
-      let v = p * M, V = d * y;
-      for (let O = 0; O < d; O++)
-        for (let b = 0; b < p; b++) {
-          const S = v + b, _ = V + O;
-          let [g, L] = h.get(S, _);
-          if (g = Math.round(g), g > 255 && console.log("Warning: terrain height > 255"), x.setVoxel(S, g, _, L), L !== u.WATER_COLOR) {
-            let E = g;
+  const { selectTerrain: n, radius: r, atlas: c } = v, a = new N0();
+  c && (a.WATER_COLOR.push(0), a.SAND_COLOR.push(1), a.GRASS_COLOR.push(2), a.DIRT_COLOR.push(3), a.SNOW_COLOR.push(4), a.STONE_COLOR.push(5), a.HILLS_COLOR.push(6), a.TRUNK_COLOR.push(7), a.LEAF_COLOR.push(8), a.MOON_COLOR.push(9));
+  const f = n === 0 ? new I0(a) : n === 1 ? new B0(a) : n === 2 ? new u0(a) : n === 3 ? new U0(a) : n === 4 ? new i0(a) : n === 5 ? new p0(a) : n === 6 ? new X0(a) : null, l = [], x = a, u = 256, p = 256, S = r;
+  for (let _ = -S; _ < S; _++)
+    for (let M = -S; M < S; M++) {
+      const h = new b();
+      c && h.setAtlasTexture(c);
+      let d = u * M, y = p * _;
+      for (let E = 0; E < p; E++)
+        for (let C = 0; C < u; C++) {
+          const m = d + C, V = y + E;
+          let [g, L] = f.get(m, V);
+          if (g = Math.round(g), g > 255 && console.log("Warning: terrain height > 255"), h.setVoxel(m, g, V, L), L !== x.WATER_COLOR) {
+            let R = g;
             for (let w = -1; w <= 1; w++)
               for (let T = -1; T <= 1; T++) {
-                const [U, z] = h.get(S + T, _ + w);
-                E = Math.min(U, E);
+                const [U, z] = f.get(m + T, V + w);
+                R = Math.min(U, R);
               }
-            if (E < g)
-              for (let w = E + 1; w < g; w++)
-                x.setVoxel(S, w, _, u.DIRT_COLOR);
+            if (R < g)
+              for (let w = R + 1; w < g; w++)
+                h.setVoxel(m, w, V, x.DIRT_COLOR);
           }
-          if (b >= 9 && b < p - 9 && O >= 9 && O < d - 9 && Math.random() < 0.01) {
-            const E = S + B.randInt(-3, 3), w = _ + B.randInt(-3, 3), [T, U] = h.get(E, w);
-            U[1] == u.GRASS_COLOR[1] && n(x, u, E, w);
+          if (C >= 9 && C < u - 9 && E >= 9 && E < p - 9 && Math.random() < 0.01) {
+            const R = m + B.randInt(-3, 3), w = V + B.randInt(-3, 3), [T, U] = f.get(R, w);
+            U[1] == x.GRASS_COLOR[1] && i(h, x, R, w);
           }
         }
-      x.createVoxelMesh(), x.name = `voxelMesh(${M},${y})`, x.frustumCulled = !1, l.push(x);
+      h.createVoxelMesh(), h.name = `voxelMesh(${M},${_})`, h.frustumCulled = !1, l.push(h);
     }
   return l;
 };
 export {
-  X0 as TerrainDB,
-  D0 as VOXExporter,
-  i0 as VoxelMesh,
-  $0 as createVoxelTerrains,
-  j0 as tex2heights
+  N0 as TerrainDB,
+  b0 as VOXExporter,
+  b as VoxelMesh,
+  G0 as createVoxelTerrains,
+  k0 as tex2heights
 };

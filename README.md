@@ -5,9 +5,9 @@
 Voxelify
 </h1>
 
-![](https://img.shields.io/badge/npm-v1.0.2-yellow)
-![](https://img.shields.io/badge/package_size-29.3KB-blue)
-![](https://img.shields.io/badge/three.js-r174-green)
+![](https://img.shields.io/badge/package_size-29.1KB-blue)
+![](https://img.shields.io/badge/npm-v1.0.3-yellow)
+![](https://img.shields.io/badge/three.js-r180-green)
 ![](https://img.shields.io/badge/license-mit-red)
 
 ## Overview
