@@ -321,7 +321,7 @@ class b extends a0 {
       const i = this._origin;
       i[0] = Math.min(i[0], t), i[1] = Math.min(i[1], e), i[2] = Math.min(i[2], o);
       const n = this.xyz_to_vp(t, e, o);
-      if (n) {
+      if (n !== void 0) {
         let r, c, a;
         const f = s.length;
         f >= 1 && (r = s[0]), f >= 2 && (r = s[1] << 24 ^ s[0] << 0), f >= 5 && (c = s[4] << 16 ^ s[3] << 8 ^ s[2] << 0), f >= 8 && (a = s[7] << 16 ^ s[6] << 8 ^ s[5] << 0), this.voxMap.set(n, { vc: r, vs: c, vr: a });
@@ -475,7 +475,7 @@ class b extends a0 {
     const t = this._origin[0], e = this._origin[1], o = this._origin[2], s = this.voxMap, i = /* @__PURE__ */ new Map(), n = this;
     let r, c;
     n.options.voxMapType = "uintVoxMap", Array.from(s).forEach((a) => {
-      c = n.vp_to_xyz(a[0]), c[0] = c[0] - t, c[1] = c[1] - e, c[2] = c[2] - o, r = n.xyz_to_vp(c[0], c[1], c[2]), r && i.set(r, a[1]);
+      c = n.vp_to_xyz(a[0]), c[0] = c[0] - t, c[1] = c[1] - e, c[2] = c[2] - o, r = n.xyz_to_vp(c[0], c[1], c[2]), r !== void 0 && i.set(r, a[1]);
     }), this.voxMap = i, this.position.set(t, e, o);
   }
   __createVoxMeshGeometry(t = null) {
@@ -860,7 +860,7 @@ class b extends a0 {
       G.children[e].visible = !1;
     t.forEach((e, o) => {
       const s = G.children[o];
-      if (e) {
+      if (e !== void 0) {
         const i = this.__getVoxelCenter(e);
         j.setFromMatrixScale(this.matrixWorld);
         const n = j.multiply({ x: 1.02, y: 1.02, z: 1.02 });
